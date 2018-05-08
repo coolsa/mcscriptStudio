@@ -47,8 +47,25 @@ body {
 .dropdown{
     display: none;
     position: absolute;
-    margin-top:20px;
-    background:#999;
+    margin-top:16px;
+    margin-left:-15px;
+    background:#403b3a;
+    height:auto;
+    width:auto;
+}
+.dropdown-button{
+  text-align:left;
+  float: left;
+  clear: left;
+  width: 100%;
+}
+
+.right-toolbar .dropdown{
+    display: none;
+    position: absolute;
+    margin-top:16px;
+    margin-left: -15px;
+    background:#403b3a;
 }
 
 .toolbar-button:hover .dropdown{

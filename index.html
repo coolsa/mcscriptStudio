@@ -26,8 +26,14 @@
 	</div>
 	<div class="main-toolbar noselect">
 		<div id="menu" class="toolbar-button">☰ Menu
-			<div class="dropdown toolbar-button">
-        <span>Drop-down content</span>
+			<div class="dropdown" >
+        <span id="new-file" class="toolbar-button dropdown-button">New File</span>
+	      <span id="rename-file" class="toolbar-button dropdown-button">Rename File</span>
+	      <span id="delete-file" class="toolbar-button dropdown-button">Delete File</span>
+	      <span id="new-project" class="toolbar-button dropdown-button">New Project</span>
+	      <span id="export-project" class="toolbar-button dropdown-button">Export Project</span>
+	      <span id="import-project" class="toolbar-button dropdown-button">Import Project</span>
+	      <span id="delete-project" class="toolbar-button dropdown-button">Delete Project</span>
       </div>
 		</div>
 		<div id="undo" class="toolbar-button">← Undo</div>
@@ -37,7 +43,13 @@
 		<div class="right-toolbar">
 			<div id="turn-cw" class="toolbar-button">↻ Cube</div>
 			<div id="turn-ccw" class="toolbar-button">↺ Cube</div>
-			<div class="toolbar-button">Configure</div>
+			<div id="help" class="toolbar-button">? Information
+				<div class="dropdown">
+	        <span class="toolbar-button dropdown-button">Manual</span>
+		      <span class="toolbar-button dropdown-button">Code</span>
+					<span class="toolbar-button dropdown-button">MCScript</span>
+	      </div>
+			</div>
 		</div>
 	</div>
 </body>
