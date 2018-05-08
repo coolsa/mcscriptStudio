@@ -55,6 +55,7 @@ body {
 	background:inherit;
 	float:right;
 }
+/*
 .file-tree{
 	float:left;
 	width:198px;
@@ -68,7 +69,7 @@ body {
 .file-button:hover:not(.active){
 	background-color:#403B3A;
 	height:4em;
-}
+}*/
 #file-file{
 	overflow:hidden;
 }

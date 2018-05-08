@@ -6,15 +6,16 @@
 	<link rel="stylesheet" href="./resources/library/codemirror/theme/pastel-on-dark.css">
 	<link rel="stylesheet" href="./resources/library/codemirror/addon/scroll/simplescrollbars.css">
 	<link rel="stylesheet" href="./css/main.css">
-	<script data-main="script/main.js" src="resources/library/require.js"></script>
-	<title>Testeroni</title>
+	<script data-main="script/main.js" src="node_modules/requirejs/require.js"></script>
+	<title>mcscript Studio</title>
 </head>
 <body>
 	<div class="main-toolbar noselect">
-		<div class="toolbar-button">Menu</div>
-		<div id="compile" class="toolbar-button">Compile</div>
+		<div class="toolbar-button">☰ Menu</div>
 		<div id="undo" class="toolbar-button">← Undo</div>
 		<div id="redo" class="toolbar-button">→ Redo</div>
+		<div id="compile" class="toolbar-button">🖶 Compile</div>
+		<div id="download" class="toolbar-button">📦 Download</div>
 		<div class="right-toolbar">
 			<div id="turn-cw" class="toolbar-button">↻ Cube</div>
 			<div id="turn-ccw" class="toolbar-button">↺ Cube</div>
@@ -23,16 +24,7 @@
 	</div>
 	<div class="top-space"></div>
 	<div class="center">
-		<div class="file-tree noselect">
-			<div id="file-dropdown" class="file-button">wow! i drop down!</div>
-			<div id="file-file" class="file-button">wow! im a main file!</div>
-			<div id="file-folder" class="file-button">wow! im a file!
-				<div id="file-file" class="file-button">wow! im a sub file with really long text! this is quite long!</div>
-				<div id="file-file" class="file-button">wow! im a second sub file with really long text! this is quite long!</div>
-			</div>
 
-		</div>
-		<div class="file-space"></div>
 		<div class="main-code">
 			<div class="text-render">
 				<div class="code-replace"></div>
