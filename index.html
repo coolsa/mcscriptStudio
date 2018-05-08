@@ -10,8 +10,26 @@
 	<title>mcscript Studio</title>
 </head>
 <body>
+	<div class="top-space"></div>
+	<div class="center">
+		<div class="main-code">
+			<div class="project-render">
+				<div class="project-file-replace noselect"></div>
+				<div class="project-code-replace"></div>
+			</div>
+			<div class="splitter"></div>
+			<div class="output-render">
+				<div class="output-file-replace noselect"></div>
+				<div class="output-code-replace"></div>
+			</div>
+		</div>
+	</div>
 	<div class="main-toolbar noselect">
-		<div class="toolbar-button">☰ Menu</div>
+		<div id="menu" class="toolbar-button">☰ Menu
+			<div class="dropdown toolbar-button">
+        <span>Drop-down content</span>
+      </div>
+		</div>
 		<div id="undo" class="toolbar-button">← Undo</div>
 		<div id="redo" class="toolbar-button">→ Redo</div>
 		<div id="compile" class="toolbar-button">🖶 Compile</div>
@@ -22,17 +40,5 @@
 			<div class="toolbar-button">Configure</div>
 		</div>
 	</div>
-	<div class="top-space"></div>
-	<div class="center">
-
-		<div class="main-code">
-			<div class="text-render">
-				<div class="code-replace"></div>
-			</div>
-			<div class="splitter"></div>
-			<div class="cube-render"></div>
-		</div>
-	</div>
-	<div class="compiled-commands">reading this means the page is loading.</div>
 </body>
 </html>
