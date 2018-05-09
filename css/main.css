@@ -110,19 +110,30 @@ body {
 	display: flex;
 	flex-direction:row;
 	overflow:inherit;
+	background: #2c2827;
 }
 .project-render{
 	float:left;
 	display:inherit;
 	position:relative;
+  overflow:hidden;
 	overflow-y:auto;
 	width:50%;
 	max-width:100%;
 	background: #2c2827;
 	flex: 0 0 auto;
 }
+.project-file-replace{
+	position:relative;
+  float:left;
+	padding:0px;
+	height:100%;
+	width:200px;
+  min-width:200px;
+}
 .project-code-replace{
-	position:absolute;
+	position:relative;
+  float:right;
 	padding:0px;
 	height:100%;
 	width:100%;
@@ -144,6 +155,21 @@ body {
 	max-width:100%;
 	background: #2c2827;
 	flex: 1 1 auto;
+}
+.output-file-replace{
+	position:relative;
+  float:left;
+	padding:0px;
+	height:100%;
+	width:200px;
+  min-width:200px;
+}
+.output-code-replace{
+	position:relative;
+  float:right;
+	padding:0px;
+	height:100%;
+	width:200px;
 }
 
 .CodeMirror-simplescroll-horizontal div, .CodeMirror-simplescroll-vertical div {
