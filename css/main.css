@@ -117,9 +117,9 @@ body {
 	position:relative;
 	overflow-y:auto;
 	width:50%;
-	flex: 0 0 auto;
 	max-width:100%;
 	background: #2c2827;
+	flex: 0 0 auto;
 }
 .project-code-replace{
 	position:absolute;
@@ -135,12 +135,17 @@ body {
 	cursor: col-resize;
 }
 .output-render{
+  float:right;
+	display:inherit;
+	position:relative;
+  overflow:hidden;
+	overflow-y:auto;
+	width:40%;
+	max-width:100%;
 	background: #2c2827;
-	height:100%;
-	display:inline;
-	float:right;
 	flex: 1 1 auto;
 }
+
 .CodeMirror-simplescroll-horizontal div, .CodeMirror-simplescroll-vertical div {
   position: absolute;
   background: #8F938F;

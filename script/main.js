@@ -4,7 +4,8 @@ require.config( {
     jquery: "../node_modules/jquery/dist/jquery.min",
     mcscript: "../node_modules/mcscript/lib/forWeb",
     jszip: "../node_modules/jszip/dist/jszip.min",
-    domready: "../node_modules/requirejs-domready/domReady"
+    domready: "../node_modules/requirejs-domready/domReady",
+    jqueryresizable: "../node_modules/jquery-resizable-dom/dist/jquery-resizable.min"
   },
   shim:{
     'mcscript': {
@@ -22,10 +23,10 @@ require.config( {
 } );
 
 require( [
-  "domready",
-  "mcscript"
-], function ( domReady, MCScript ) {
+  "running",
+  "domready"
+], function (running, domReady ) {
   domReady( function () {
-    console.log(MCScript)
+    window.running = running();
   } );
 } );
