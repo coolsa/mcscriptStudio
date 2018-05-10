@@ -59,7 +59,7 @@ typings/
 
 # whitelist for my project.
 
-!node_modules/codemirror/*
+!node_modules/codemirror/
 !node_modules/codemirror/theme/pastel-on-dark.css
 !node_modules/codemirror/addon/scroll/simplescrollbars.css
 !node_modules/jquery/dist/jquery.min
