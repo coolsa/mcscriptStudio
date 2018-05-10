@@ -15,7 +15,7 @@ define([
 			theme: 'pastel-on-dark',
 			scrollbarStyle: 'simple'
 		});
-		this.projcodeeditor.setSize($(".center").width()-$(".output-render").width()-$(".splitter").width()-200,'100%');
+		this.projcodeeditor.setSize($(".project-render").width()-200,'100%');
 		var projcodeeditor = this.projcodeeditor;
 		this.projcodeeditor.on("change",function(){localStorage.text = projcodeeditor.getValue()});
 		this.outcodeeditor = CodeMirror($(".output-code-replace")[0],{
@@ -26,7 +26,7 @@ define([
 			theme: 'pastel-on-dark',
 			scrollbarStyle: 'simple'
 		});
-		this.outcodeeditor.setSize($(".center").width()-$(".project-render").width()-$(".splitter").width()-200,'100%');
+		this.outcodeeditor.setSize($(".output-render").width()-201,'100%');
 		this.slider();
 		this.buttons();
 //		this.compiler = new compiler($(".compiled-commands"),this.projcodeeditor);
@@ -35,7 +35,14 @@ define([
 		buttons: function(){
 			var that = this;
 		  document.getElementById("compile").onclick = function() {
-				window.running.interface.compiler.fancy();
+				//compile stuff goes here.
+				that.compiled=true;
+			};
+		  document.getElementById("download").onclick = function() {
+				//download stuff goes here.
+				//only if compiled is true.
+				if(that.compiled) console.log("hey its compiled!")
+				else console.log("no compile yet. heck")
 			};
 			document.getElementById("undo").onclick = function() {
 				window.running.interface.projcodeeditor.execCommand("undo");
@@ -56,7 +63,7 @@ define([
 				onDrag: function(){
 				},
 				onDragEnd: function(){
-					that.projcodeeditor.setSize($(".center").width()-$(".output-render").width()-$(".splitter").width()-200,'100%');
+					that.projcodeeditor.setSize($(".project-render").width()-200,'100%');
 					that.projcodeeditor.refresh();
 				}
 			});
@@ -67,7 +74,7 @@ define([
 				},
 				onDragEnd: function(){
 					$(".output-render")[0].style.maxWidth = $(".center").width()-$(".project-render").width() +"px";
-					that.outcodeeditor.setSize($(".center").width()-$(".project-render").width()-$(".splitter").width()-200,'100%');
+					that.outcodeeditor.setSize($(".output-render").width()-201,'100%');
 					that.outcodeeditor.refresh();
 				}
 			});
@@ -75,9 +82,9 @@ define([
 				$(".project-render")[0].style.maxWidth = ($(".center").width()-$(".splitter").width())/2 +"px";
   			$(".output-render")[0].style.maxWidth = $(".center").width()-$(".project-render").width() +"px";
 				$(".center")[0].style.maxHeight = $(window).height() + "px";
-				that.projcodeeditor.setSize($(".center").width()-$(".output-render").width()-$(".splitter").width()-200,'100%');
+				that.projcodeeditor.setSize($(".project-render").width()-200,'100%');
 				that.projcodeeditor.refresh();
-				that.outcodeeditor.setSize($(".center").width()-$(".project-render").width()-$(".splitter").width()-200,'100%');
+				that.outcodeeditor.setSize($(".output-render").width()-201,'100%');
 				that.outcodeeditor.refresh();
 			});
 		}

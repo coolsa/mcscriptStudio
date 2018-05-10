@@ -21,4 +21,13 @@ File Tree List w/ objects and dynamic scripting.
 
 
 for ui:
-menu should have ⇑ and ⇓ for export and import respectivly 
+menu should have ⇑ and ⇓ for export and import respectivly
+⮡ for the file dropdowns
+ex:
+file
+folder/
+⮡file
+⮡folder/
+  ⮡file
+⮡file
+file
