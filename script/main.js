@@ -27,6 +27,6 @@ require( [
   "domready"
 ], function (running, domReady ) {
   domReady( function () {
-    window.running = new running();
+    window.running = running();
   } );
 } );
