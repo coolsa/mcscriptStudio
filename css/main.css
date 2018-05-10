@@ -60,14 +60,6 @@ body {
   width: 100%;
 }
 
-.right-toolbar .dropdown{
-    display: none;
-    position: absolute;
-    margin-top:16px;
-    margin-left: -15px;
-    background:#403b3a;
-}
-
 .toolbar-button:hover .dropdown{
     display: block;
 }

@@ -40,12 +40,14 @@ node_modules/*
 !node_modules/mcscript/
 !node_modules/jszip/
 !node_modules/requirejs-domready/
+!node_modules/requirejs/
 !node_modules/jquery-resizable-dom/
 
 node_modules/jquery/*
 node_modules/mcscript/*
 node_modules/jszip/*
 node_modules/requirejs-domready/*
+node_modules/requirejs/*
 node_modules/jquery-resizable-dom/*
 
 !node_modules/jquery/dist/
@@ -60,6 +62,7 @@ node_modules/mcscript/lib/*
 
 node_modules/jquery/*
 !node_modules/requirejs-domready/domReady.js
+!node_modules/requirejs/require.js
 !node_modules/jquery/dist/jquery.min.js
 !node_modules/mcscript/lib/forWeb.js
 !node_modules/jszip/dist/jszip.min.js
