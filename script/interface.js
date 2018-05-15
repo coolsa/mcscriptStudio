@@ -56,6 +56,9 @@ define([
 				onDrag: function(){
 				},
 				onDragEnd: function(){
+					$(".output-render")[0].style.maxWidth = $(".center").width()-$(".project-render").width() +"px";
+					that.outcodeeditor.setSize($(".center").width()-$(".project-render").width()-$(".splitter").width()-200,'100%');
+					that.outcodeeditor.refresh();
 					that.projcodeeditor.setSize($(".center").width()-$(".output-render").width()-$(".splitter").width()-200,'100%');
 					that.projcodeeditor.refresh();
 				}
@@ -66,13 +69,10 @@ define([
 				onDrag: function(){
 				},
 				onDragEnd: function(){
-					$(".output-render")[0].style.maxWidth = $(".center").width()-$(".project-render").width() +"px";
-					that.outcodeeditor.setSize($(".center").width()-$(".project-render").width()-$(".splitter").width()-200,'100%');
-					that.outcodeeditor.refresh();
 				}
 			});
 			$(window).resize(function(){
-				$(".project-render")[0].style.maxWidth = ($(".center").width()-$(".splitter").width())/2 +"px";
+				$(".project-render")[0].style.maxWidth = ($(".center").width()-$(".splitter").width()) +"px";
   			$(".output-render")[0].style.maxWidth = $(".center").width()-$(".project-render").width() +"px";
 				$(".center")[0].style.maxHeight = $(window).height() + "px";
 				that.projcodeeditor.setSize($(".center").width()-$(".output-render").width()-$(".splitter").width()-200,'100%');
