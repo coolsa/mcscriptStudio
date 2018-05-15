@@ -67,6 +67,7 @@ node_modules/jquery/*
 !node_modules/mcscript/lib/forWeb.js
 !node_modules/jszip/dist/jszip.min.js
 !node_modules/jquery-resizable-dom/dist/jquery-resizable.min.js
+!node_modules/jquery-resizable-dom/dist/jquery-resizable.min.js.map
 
 jspm_packages/
 
