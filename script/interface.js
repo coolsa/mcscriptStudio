@@ -9,7 +9,7 @@ define([
 		//this.$render-area = $(".main-code");
 		if(localStorage.text==undefined)localStorage.text="";
 		this.projcodeeditor = CodeMirror($(".project-code-replace")[0],{
-			mode: 'javascript',
+			mode: 'mcscript',
 			lineNumbers: true,
 			value: localStorage.text,
 			theme: 'pastel-on-dark',

@@ -24,7 +24,10 @@ require.config( {
 
 require( [
   "running",
-  "domready"
+  "domready",
+  "script/syntax/mcscript-mode.js",
+  "codemirror/keymap/sublime",
+  "codemirror/addon/edit/matchbrackets"
 ], function (running, domReady ) {
   domReady( function () {
     window.running = running();
