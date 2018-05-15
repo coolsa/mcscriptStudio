@@ -84,7 +84,7 @@ body {
 }
 
 .file-tree{
-  overflow: scroll;
+  overflow-x: hidden;
 	float:left;
 	height:100%;
 	background: #232020;
