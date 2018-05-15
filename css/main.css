@@ -76,21 +76,26 @@ body {
 	background:inherit;
 	float:right;
 }
-/*
+
 .file-tree{
+  overflow: scroll;
 	float:left;
-	width:198px;
 	height:100%;
 	background: #232020;
 }
 .file-button{
+  cursor: pointer;
+  white-space: nowrap;
 	background-color:#2C2827;
-	height:1.2em;
+  padding:5px;
+  padding-left:10px;
+  padding-right:0px;
 }
 .file-button:hover:not(.active){
 	background-color:#403B3A;
-	height:4em;
-}*/
+  white-space: normal;
+}
+
 .main-code {
 	position:absolute;
 	top:0px;
@@ -120,8 +125,8 @@ body {
   float:left;
 	padding:0px;
 	height:100%;
-	width:200px;
-  min-width:200px;
+	width:250px;
+  min-width:250px;
 }
 .project-code-replace{
 	position:relative;
@@ -153,8 +158,8 @@ body {
   float:left;
 	padding:0px;
 	height:100%;
-	width:200px;
-  min-width:200px;
+	width:250px;
+  min-width:250px;
 }
 .output-code-replace{
 	position:relative;

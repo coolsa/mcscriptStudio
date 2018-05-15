@@ -1,10 +1,11 @@
 define([
 	'codemirror',
 	'jquery',
+	'files',
 	'jqueryresizable',
 	'codemirror/mode/javascript/javascript',
 	'codemirror/addon/scroll/simplescrollbars'
-],function(CodeMirror, $){
+],function(CodeMirror, $, files){
 	function interface(){
 		//this.$render-area = $(".main-code");
 		if(localStorage.text==undefined)localStorage.text="";
@@ -29,6 +30,7 @@ define([
 		this.outcodeeditor.setSize($(".center").width()-$(".project-render").width()-$(".splitter").width()-200,'100%');
 		this.slider();
 		this.buttons();
+		this.files = new files();
 //		this.compiler = new compiler($(".compiled-commands"),this.projcodeeditor);
 	}
 	interface.prototype = {

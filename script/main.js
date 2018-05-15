@@ -1,6 +1,7 @@
 require.config( {
   baseUrl: "./script",
   paths: {
+    vendor: "../node_modules",
     jquery: "../node_modules/jquery/dist/jquery.min",
     mcscript: "../node_modules/mcscript/lib/forWeb",
     jszip: "../node_modules/jszip/dist/jszip.min",
