@@ -95,11 +95,23 @@ body {
 	background-color:#2C2827;
   padding:5px;
   padding-left:10px;
-  padding-right:0px;
+  padding-right:10px;
 }
 .file-button:hover:not(.active){
 	background-color:#403B3A;
   white-space: normal;
+  line-break: strict;
+}
+.file-hidden{
+  display:none;
+}
+.file-dropdown{
+  position:relative;
+  float:right;
+  right:5px;
+  left:0px;
+  bottom:19px;
+  background-color:rgba(0,0,0,0);
 }
 
 .main-code {

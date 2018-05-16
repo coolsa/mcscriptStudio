@@ -31,6 +31,6 @@ require( [
   "codemirror/addon/edit/matchbrackets"
 ], function (running, domReady ) {
   domReady( function () {
-    window.running = running();
+    window.running = new running();
   } );
 } );

@@ -1,49 +1,27 @@
 define([
 	'jquery'
 ],function($){
+  /*
+  todo:
+  make a thing that loads this all fancy and stuff
+  this is meant to do things like:
+  hold the files in an object form
+  using prototypes to add or remove some folders or files or new projects
+  files are in a object tree
+  ex:
+
+  */
   function files(){
-    this.projFileList = $('.project-file-replace');
-    this.projFileList.append('<div class="file-button" id="testeroni">hey! I am an incredibly long file name, and i want to test if i actually have any foresight at all!</div>')
-    this.projFileList.append('<div class="file-button" id="testeroni">hey! I am an incredibly long file name, and i want to test if i actually have any foresight at all!</div>')
-    this.projFileList.append('<div class="file-button" id="testeroni">hey! I am an incredibly long file name, and i want to test if i actually have any foresight at all!</div>')
-    this.projFileList.append('<div class="file-button" id="testeroni">hey! I am an incredibly long file name, and i want to test if i actually have any foresight at all!</div>')
-    this.projFileList.append('<div class="file-button" id="testeroni">hey! I am an incredibly long file name, and i want to test if i actually have any foresight at all!</div>')
-    this.projFileList.append('<div class="file-button" id="testeroni">hey! I am an incredibly long file name, and i want to test if i actually have any foresight at all!</div>')
-    this.projFileList.append('<div class="file-button" id="testeroni">hey! I am an incredibly long file name, and i want to test if i actually have any foresight at all!</div>')
-    this.projFileList.append('<div class="file-button" id="testeroni">hey! I am an incredibly long file name, and i want to test if i actually have any foresight at all!</div>')
-    this.projFileList.append('<div class="file-button" id="testeroni">hey! I am an incredibly long file name, and i want to test if i actually have any foresight at all!</div>')
-    this.projFileList.append('<div class="file-button" id="testeroni">hey! I am an incredibly long file name, and i want to test if i actually have any foresight at all!</div>')
-    this.projFileList.append('<div class="file-button" id="testeroni">hey! I am an incredibly long file name, and i want to test if i actually have any foresight at all!</div>')
-    this.projFileList.append('<div class="file-button" id="testeroni">hey! I am an incredibly long file name, and i want to test if i actually have any foresight at all!</div>')
-    this.projFileList.append('<div class="file-button" id="testeroni">hey! I am an incredibly long file name, and i want to test if i actually have any foresight at all!</div>')
-    this.projFileList.append('<div class="file-button" id="testeroni">hey! I am an incredibly long file name, and i want to test if i actually have any foresight at all!</div>')
-    this.projFileList.append('<div class="file-button" id="testeroni">hey! I am an incredibly long file name, and i want to test if i actually have any foresight at all!</div>')
-    this.projFileList.append('<div class="file-button" id="testeroni">hey! I am an incredibly long file name, and i want to test if i actually have any foresight at all!</div>')
-    this.projFileList.append('<div class="file-button" id="testeroni">hey! I am an incredibly long file name, and i want to test if i actually have any foresight at all!</div>')
-    this.projFileList.append('<div class="file-button" id="testeroni">hey! I am an incredibly long file name, and i want to test if i actually have any foresight at all!</div>')
-    this.projFileList.append('<div class="file-button" id="testeroni">hey! I am an incredibly long file name, and i want to test if i actually have any foresight at all!</div>')
-    this.projFileList.append('<div class="file-button" id="testeroni">hey! I am an incredibly long file name, and i want to test if i actually have any foresight at all!</div>')
-    this.projFileList.append('<div class="file-button" id="testeroni">hey! I am an incredibly long file name, and i want to test if i actually have any foresight at all!</div>')
-    this.projFileList.append('<div class="file-button" id="testeroni">hey! I am an incredibly long file name, and i want to test if i actually have any foresight at all!</div>')
-    this.projFileList.append('<div class="file-button" id="testeroni">hey! I am an incredibly long file name, and i want to test if i actually have any foresight at all!</div>')
-    this.projFileList.append('<div class="file-button" id="testeroni">hey! I am an incredibly long file name, and i want to test if i actually have any foresight at all!</div>')
-    this.projFileList.append('<div class="file-button" id="testeroni">hey! I am an incredibly long file name, and i want to test if i actually have any foresight at all!</div>')
-    this.projFileList.append('<div class="file-button" id="testeroni">hey! I am an incredibly long file name, and i want to test if i actually have any foresight at all!</div>')
-    this.projFileList.append('<div class="file-button" id="testeroni">hey! I am an incredibly long file name, and i want to test if i actually have any foresight at all!</div>')
-    this.projFileList.append('<div class="file-button" id="testeroni">hey! I am an incredibly long file name, and i want to test if i actually have any foresight at all!</div>')
-    this.projFileList.append('<div class="file-button" id="testeroni">hey! I am an incredibly long file name, and i want to test if i actually have any foresight at all!</div>')
-    this.projFileList.append('<div class="file-button" id="testeroni">hey! I am an incredibly long file name, and i want to test if i actually have any foresight at all!</div>')
-    this.projFileList.append('<div class="file-button" id="testeroni">hey! I am an incredibly long file name, and i want to test if i actually have any foresight at all!</div>')
-    this.projFileList.append('<div class="file-button" id="testeroni">hey! I am an incredibly long file name, and i want to test if i actually have any foresight at all!</div>')
-    //yes i did just switch into flipping jquery, because of reasons.
-    this.projFileList.buttons = function(){
-      $('#testeroni').click(
-        function(){
-          console.log("wow you pressed it!");
+    this.projects = {
+      "file": "wow such file",
+      "folder": {
+        "file": "wow neat another file!",
+        "folder": {
+          "file": "wow nested folders!",
+          "file2": "wow two files!"
         }
-      )
+      }
     }
-    this.projFileList.buttons();
   }
   return files;
 });
