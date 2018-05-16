@@ -4,18 +4,13 @@ define([
 ],function($, files){
   function makeDisplay(object,spot,main,level=0){
     var tree = Object.keys(object);
-    for(var i = 0; i <= tree.length; i++){
+    for(var i = 0; i < tree.length; i++){
       if(typeof object[tree[i]] === "string"){
-        main.append($('<div/>', {class:"file-button ", text:tree[i]}));
+        main.append($('<div/>', {class:"file-button ", alt:object[tree[i]], text:tree[i]}).click(function(){window.running.interface.projcodeeditor.setValue($(this).attr("alt"));}));
       }
       if(typeof object[tree[i]] === "object"){
         main.append($('<div/>',{class:"file-button",text: tree[i]}).append('<div/>',{class:"file-dropdown",text:'▶'}).click(function(){$(this).toggle()}));
-        if(typeof spot.children === "function")
-          next = spot.children()[spot.children()["length"]-1];
-        else{
-          next = spot.children[spot.children["length"]-1];
-        }
-        makeDisplay(object[tree[i]],next,main);
+        makeDisplay(object[tree[i]],$(main[0].lastChild),main,level+1);
       }
     }
   }

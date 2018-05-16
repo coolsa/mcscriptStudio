@@ -56,6 +56,9 @@ define([
 				handleSelector: ".splitter",
 				resizeHeight:false,
 				onDrag: function(){
+					$(".output-render")[0].style.maxWidth = $(".center").width()-$(".project-render").width() +"px";
+					that.outcodeeditor.setSize($(".center").width()-$(".project-render").width()-$(".splitter").width()-200,'100%');
+					that.projcodeeditor.setSize($(".center").width()-$(".output-render").width()-$(".splitter").width()-200,'100%');
 				},
 				onDragEnd: function(){
 					$(".output-render")[0].style.maxWidth = $(".center").width()-$(".project-render").width() +"px";

@@ -90,6 +90,10 @@ body {
 	background: #232020;
 }
 .file-button{
+  font-family:monospace;
+  font-size:1.2em;
+  word-wrap:normal;
+  overflow-wrap:normal;
   cursor: pointer;
   white-space: nowrap;
 	background-color:#2C2827;
@@ -98,12 +102,10 @@ body {
   padding-right:10px;
 }
 .file-button:hover:not(.active){
+  word-wrap:break-word;
+  overflow-wrap:break-word;
 	background-color:#403B3A;
   white-space: normal;
-  line-break: strict;
-}
-.file-hidden{
-  display:none;
 }
 .file-dropdown{
   position:relative;
