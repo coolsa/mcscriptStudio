@@ -18,7 +18,9 @@ define([
 		});
 		this.projcodeeditor.setSize($(".center").width()-$(".output-render").width()-$(".splitter").width()-200,'100%');
 		var projcodeeditor = this.projcodeeditor;
-		this.projcodeeditor.on("change",function(){localStorage.text = projcodeeditor.getValue()});
+		this.projcodeeditor.on("change",function(){
+			localStorage.text = projcodeeditor.getValue();
+		});
 		this.outcodeeditor = CodeMirror($(".output-code-replace")[0],{
 			mode: 'javascript',
 			lineNumbers: true,
