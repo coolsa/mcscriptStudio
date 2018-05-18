@@ -15,7 +15,15 @@ define([
     buttons: function(){
       $('#new-file').click(
         function(){
-          console.log("wow you pressed it!");
+          if(Object.prototype.toString.call($(".file-selected").data("filedata")) === "[object Object]"){
+            console.log("folder");
+          };
+          if(Object.prototype.toString.call($(".file-selected").data("filedata"))=== "[object Array]"){
+            console.log("file");
+            if(Object.prototype.toString.call($(".file-selected").parent().data("filedata")) === "[object Object]"){
+                console.log("folder");
+              };
+          };
         }
       )
     },
@@ -24,13 +32,11 @@ define([
       var tree = Object.keys(files);
       for(var i = 0; i < tree.length; i++){
         //files
-        if(typeof files[tree[i]] === "string"){
+        if(Object.prototype.toString.call(files[tree[i]]) === "[object Array]"){
           spot.append($('<div/>', {
             class:"file-button ", text:tree[i]
           }).dblclick(function(e){
             e.stopPropagation();
-            that.files.getCurrentFile(this);
-            window.running.interface.projcodeeditor.setValue($.data(this,"filedata"));
           }).hover(
             function(){
               $(main).find("*").removeClass("file-hover");
@@ -48,13 +54,15 @@ define([
             $(this).addClass("file-selected");
             $(this).parents().addClass("file-parent-active");
             $(main).removeClass("file-parent-active");
+            that.files.getCurrentFile(this);
+            window.running.interface.projcodeeditor.setValue($.data(this,"filedata")[0]);
           }));
           $.data(spot[0].lastChild,"filedata",files[tree[i]]);
           $.data(spot[0].lastChild,"filename",tree[i]);
         }
 
         //folders
-        if(typeof files[tree[i]] === "object"){
+        if(Object.prototype.toString.call(files[tree[i]]) === "[object Object]"){
           spot.append($('<div/>',{
             class:"file-button", text: tree[i]
           }).dblclick(function(e){
@@ -89,6 +97,7 @@ define([
     //   //this should highlight a button and then set it as the this.selectedButton
     //   //this would make it possible for the newfile to add or delete files/folders.
     //   this has been replaced with $(".project-file-replace").find(".file-selected")
+    // $.data(window.running.interface.projects.projFileList,"filedata") is also useful.
     // }
   }
   return projects;
