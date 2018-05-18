@@ -16,7 +16,7 @@ define([
 			theme: 'pastel-on-dark',
 			scrollbarStyle: 'simple'
 		});
-		this.projcodeeditor.setSize($(".center").width()-$(".output-render").width()-$(".splitter").width()-200,'100%');
+		this.projcodeeditor.setSize($(".center").width()-$(".output-render").width()-$(".splitter").width()-250,'100%');
 		var projcodeeditor = this.projcodeeditor;
 		this.projcodeeditor.on("change",function(){
 			localStorage.text = projcodeeditor.getValue();
@@ -29,7 +29,7 @@ define([
 			theme: 'pastel-on-dark',
 			scrollbarStyle: 'simple'
 		});
-		this.outcodeeditor.setSize($(".center").width()-$(".project-render").width()-$(".splitter").width()-200,'100%');
+		this.outcodeeditor.setSize($(".center").width()-$(".project-render").width()-$(".splitter").width()-250,'100%');
 		this.slider();
 		this.buttons();
 		this.projects = new projects();
@@ -59,14 +59,14 @@ define([
 				resizeHeight:false,
 				onDrag: function(){
 					$(".output-render")[0].style.maxWidth = $(".center").width()-$(".project-render").width() +"px";
-					that.outcodeeditor.setSize($(".center").width()-$(".project-render").width()-$(".splitter").width()-200,'100%');
-					that.projcodeeditor.setSize($(".center").width()-$(".output-render").width()-$(".splitter").width()-200,'100%');
+					that.outcodeeditor.setSize($(".center").width()-$(".project-render").width()-$(".splitter").width()-250,'100%');
+					that.projcodeeditor.setSize($(".center").width()-$(".output-render").width()-$(".splitter").width()-250,'100%');
 				},
 				onDragEnd: function(){
 					$(".output-render")[0].style.maxWidth = $(".center").width()-$(".project-render").width() +"px";
-					that.outcodeeditor.setSize($(".center").width()-$(".project-render").width()-$(".splitter").width()-200,'100%');
+					that.outcodeeditor.setSize($(".center").width()-$(".project-render").width()-$(".splitter").width()-250,'100%');
 					that.outcodeeditor.refresh();
-					that.projcodeeditor.setSize($(".center").width()-$(".output-render").width()-$(".splitter").width()-200,'100%');
+					that.projcodeeditor.setSize($(".center").width()-$(".output-render").width()-$(".splitter").width()-250,'100%');
 					that.projcodeeditor.refresh();
 				}
 			});
@@ -82,9 +82,9 @@ define([
 				$(".project-render")[0].style.maxWidth = ($(".center").width()-$(".splitter").width()) +"px";
   			$(".output-render")[0].style.maxWidth = $(".center").width()-$(".project-render").width() +"px";
 				$(".center")[0].style.maxHeight = $(window).height() + "px";
-				that.projcodeeditor.setSize($(".center").width()-$(".output-render").width()-$(".splitter").width()-200,'100%');
+				that.projcodeeditor.setSize($(".center").width()-$(".output-render").width()-$(".splitter").width()-250,'100%');
 				that.projcodeeditor.refresh();
-				that.outcodeeditor.setSize($(".center").width()-$(".project-render").width()-$(".splitter").width()-200,'100%');
+				that.outcodeeditor.setSize($(".center").width()-$(".project-render").width()-$(".splitter").width()-250,'100%');
 				that.outcodeeditor.refresh();
 			});
 		}

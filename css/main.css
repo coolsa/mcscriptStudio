@@ -100,13 +100,28 @@ body {
   padding-top:2px;
   padding-bottom:2px;
   padding-left:10px;
-  padding-right:2px;
+  /* padding-right:2px; */
 }
-.file-button:hover:not(.active){
+/* .file-button:hover:not(.active){
   word-wrap:break-word;
   overflow-wrap:break-word;
 	background-color:#403B3A;
   white-space: normal;
+} */
+.file-active{
+  	background-color:#403B3A;
+}
+.file-hover{
+    word-wrap:break-word;
+    overflow-wrap:break-word;
+    white-space: normal;
+  	background-color:#403B3A;
+}
+.file-parent-active{
+  	background-color:#403B3A;
+}
+.file-selected{
+  	background-color:#605e5e;
 }
 .file-dropdown{
   position:relative;
