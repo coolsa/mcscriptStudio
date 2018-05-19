@@ -120,6 +120,9 @@ body {
 .file-parent-active{
   	background-color:#403B3A;
 }
+.file-file-selected{
+  	background-color:#535352;
+}
 .file-selected{
   	background-color:#605e5e;
 }

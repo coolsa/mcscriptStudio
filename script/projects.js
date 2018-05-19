@@ -29,12 +29,11 @@ define([
     },
     display: function(files,spot,main,level=0){
       that = this;
-      var tree = Object.keys(files);
-      for(var i = 0; i < tree.length; i++){
+      for(var i = 1; i < files.length; i++){
         //files
-        if(Object.prototype.toString.call(files[tree[i]]) === "[object Array]"){
+        if(Object.prototype.toString.call(files[i]) === "[object Object]"){
           spot.append($('<div/>', {
-            class:"file-button ", text:tree[i]
+            class:"file-button ", text:Object.keys(files[i])[0]
           }).dblclick(function(e){
             e.stopPropagation();
           }).hover(
@@ -50,24 +49,25 @@ define([
           ).click(function(e){
             e.stopPropagation();
             $(main).find("*").removeClass("file-selected");
+            $(main).find("*").removeClass("file-file-selected");
             $(main).find("*").removeClass("file-parent-active");
             $(this).addClass("file-selected");
+            $(this).addClass("file-file-selected");
             $(this).parents().addClass("file-parent-active");
             $(main).removeClass("file-parent-active");
             that.files.getCurrentFile(this);
-            window.running.interface.projcodeeditor.setValue($.data(this,"filedata")[0]);
+            window.running.interface.projcodeeditor.setValue($(this).data("filedata")[Object.keys($(this).data("filedata"))[0]][0]);
           }));
-          $.data(spot[0].lastChild,"filedata",files[tree[i]]);
-          $.data(spot[0].lastChild,"filename",tree[i]);
+          $.data(spot[0].lastChild,"filedata",files[i]);
         }
 
         //folders
-        if(Object.prototype.toString.call(files[tree[i]]) === "[object Object]"){
+        if(Object.prototype.toString.call(files[i]) === "[object Array]"){
           spot.append($('<div/>',{
-            class:"file-button", text: tree[i]
+            class:"file-button", text: files[i][0]
           }).dblclick(function(e){
             e.stopPropagation();
-            //console.log($.data(this,"filedata"));
+            console.log($(this).data("filedata"));
             $(this).children('.file-button').toggle();
           }).hover(
             function(){
@@ -87,9 +87,8 @@ define([
             $(this).parents().addClass("file-parent-active");
             $(main).removeClass("file-parent-active");
           }));
-          $.data(spot[0].lastChild,"filedata",files[tree[i]]);
-          $.data(spot[0].lastChild,"filename",tree[i]);
-          this.display(files[tree[i]],$(spot[0].lastChild),main,level+1);
+          $.data(spot[0].lastChild,"filedata",files[i]);
+          this.display(files[i],$(spot[0].lastChild),main,level+1);
         }
       }
     },
