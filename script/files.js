@@ -1,5 +1,4 @@
 define([
-	'jqueryui'
 ],function(){
   /*
   todo:
@@ -36,9 +35,6 @@ define([
   }
   files.prototype = {
     //should alter data of the files object. aka this thing.
-    getCurrentFile: function(spot){
-      $.data(spot,"filetree");
-    },
     matchingFile: function(spot,name){
       var matching = false;
       for(i=1;i<spot.length;i++){

@@ -1,7 +1,8 @@
 define([
   'files',
-  'jqueryui'
-],function(files){
+  'modal',
+  'jquery'
+],function(files,modal,$){
   function projects(){
     this.projFileList = $('.project-file-replace');
     this.buttons();
@@ -18,7 +19,7 @@ define([
         alert("Your file cannot be named this!");
       else {
         var file = {};
-        file[name] = "\n";
+        file[name] = [""];
         spot.push(file);
       };
       this.projFileList.empty();
@@ -66,7 +67,6 @@ define([
             that.newFile($(".file-selected").data("filedata"));
           };
           if(Object.prototype.toString.call($(".file-selected").data("filedata"))=== "[object Object]"){
-            console.log("file");
             if(Object.prototype.toString.call($(".file-selected").parent().data("filedata")) === "[object Array]"){
               that.newFile($(".file-selected").parent().data("filedata"));
             };
@@ -79,7 +79,6 @@ define([
             that.newFolder($(".file-selected").data("filedata"));
           };
           if(Object.prototype.toString.call($(".file-selected").data("filedata"))=== "[object Object]"){
-            console.log("file");
             if(Object.prototype.toString.call($(".file-selected").parent().data("filedata")) === "[object Array]"){
               that.newFolder($(".file-selected").parent().data("filedata"));
             };
@@ -120,7 +119,6 @@ define([
             $(this).addClass("file-file-selected");
             $(this).parents().addClass("file-parent-active");
             $(main).removeClass("file-parent-active");
-            that.files.getCurrentFile(this);
             window.running.interface.projcodeeditor.setValue($(this).data("filedata")[Object.keys($(this).data("filedata"))[0]][0]);
           }));
           $.data(spot[0].lastChild,"filedata",files[i]);

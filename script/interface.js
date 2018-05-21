@@ -1,13 +1,13 @@
 define([
 	'codemirror',
+	'jquery',
 	'projects',
+	'modal',
 	'jqueryresizable',
 	'codemirror/mode/javascript/javascript',
-	'jqueryui',
 	'codemirror/addon/scroll/simplescrollbars'
-],function(CodeMirror, projects){
+],function(CodeMirror, $, projects,modal){
 	function interface(){
-		this.modal = $(".dialog-top");
 		//this.$render-area = $(".main-code");
 		if(localStorage.text===undefined || localStorage.text==="undefined")localStorage.text="[\"\"]";
 		this.projcodeeditor = CodeMirror($(".project-code-replace")[0],{
@@ -35,8 +35,7 @@ define([
 		this.slider();
 		this.buttons();
 		this.projects = new projects();
-		// $(".dialog").dialog({'autoOpen':false});
-		// $(".dialog").dialog("open");
+		this.modal = new modal();
 //		this.compiler = new compiler($(".compiled-commands"),this.projcodeeditor);
 	}
 	interface.prototype = {
