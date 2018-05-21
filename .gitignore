@@ -37,6 +37,7 @@ build/Release
 node_modules/*
 !node_modules/codemirror/
 !node_modules/jquery/
+!node_modules/jqueryui/
 !node_modules/mcscript/
 !node_modules/jszip/
 !node_modules/requirejs-domready/
@@ -44,6 +45,7 @@ node_modules/*
 !node_modules/jquery-resizable-dom/
 
 node_modules/jquery/*
+node_modules/jqueryui/*
 node_modules/mcscript/*
 node_modules/jszip/*
 node_modules/requirejs-domready/*
@@ -63,6 +65,8 @@ node_modules/mcscript/lib/*
 node_modules/jquery/*
 !node_modules/requirejs-domready/domReady.js
 !node_modules/requirejs/require.js
+!node_modules/jqueryui/jquery-ui.min.js
+!node_modules/jqueryui/jquery-ui.min.css
 !node_modules/jquery/dist/jquery.min.js
 !node_modules/jquery/dist/jquery.min.map
 !node_modules/mcscript/lib/forWeb.js

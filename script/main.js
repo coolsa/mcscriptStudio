@@ -4,11 +4,16 @@ require.config( {
     vendor: "../node_modules",
     jquery: "../node_modules/jquery/dist/jquery.min",
     mcscript: "../node_modules/mcscript/lib/forWeb",
+    jqueryui: "../node_modules/jqueryui/jquery-ui.min",
     jszip: "../node_modules/jszip/dist/jszip.min",
     domready: "../node_modules/requirejs-domready/domReady",
     jqueryresizable: "../node_modules/jquery-resizable-dom/dist/jquery-resizable.min"
   },
   shim:{
+    "jqueryui": {
+      exports: "$",
+      deps: ['jquery']
+    },
     'mcscript': {
       exports: 'mcscript',
       init: function(){
