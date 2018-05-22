@@ -1,8 +1,7 @@
 define([
   'files',
-  'modal',
   'jquery'
-],function(files,modal,$){
+],function(files,$){
   function projects(){
     this.projFileList = $('.project-file-replace');
     this.buttons();
@@ -14,38 +13,125 @@ define([
   }
   projects.prototype = {
     newFile: function(spot){
-      var name = prompt("File Name", "file");
-      if(name===""||(this.files.matchingFile(spot,name)))
-        alert("Your file cannot be named this!");
-      else {
-        var file = {};
-        file[name] = [""];
-        spot.push(file);
-      };
-      this.projFileList.empty();
-      this.display(this.files["projects"],this.projFileList,this.projFileList);
-      localStorage.text = JSON.stringify(this.files.projects);
+      var that=this;
+      window.running.modal.modal.empty();
+   	  window.running.modal.modal.append(
+        $("<div/>",{class:"dialog-button dialog-button-left",text:"cancel"})
+        .click(function(){
+          window.running.modal.dialog.hide();
+          window.running.modal.modal.empty();
+        })
+      ).append(
+        $("<div/>",{class:"dialog-button dialog-button-right",text:"create"})
+        .click(function(){//somehow make this do the thing. with lmao nah, putting this into projects.
+          var name = $(".dialog-text-input").text();
+          if(name===""||(that.files.matchingFile(spot,name))){
+            window.running.modal.error.text("The file cannot be named this!");
+            window.running.modal.error.show();
+            setTimeout(function(){window.running.modal.error.hide()},5000);
+          }
+          else {
+            window.running.modal.dialog.hide();
+            window.running.modal.modal.empty();
+            var file = {};
+            file[name] = [""];
+            spot.push(file);
+            that.projFileList.empty();
+            that.display(that.files["projects"],that.projFileList,that.projFileList);
+            //console.log($(this).parent());
+            localStorage.text = JSON.stringify(that.files.projects);
+          }
+        })
+      ).append(
+        $("<div/>",{class:"dialog-header",text:"Create new file"})
+      ).append(
+        $("<div/>",{class:"dialog-text-input",text:"file"}).attr("contenteditable",'true')
+      );
+      window.running.modal.error.hide();
+  	  window.running.modal.dialog.show();
     },
     newFolder: function(spot){
-      var name = prompt("Folder Name", "folder");
-      if(name===""||(this.files.matchingFolder(spot,name)))
-        alert("Your folder cannot be named this!");
-      else spot.push([name]);
-      this.projFileList.empty();
-      this.display(this.files["projects"],this.projFileList,this.projFileList);
-      localStorage.text = JSON.stringify(this.files.projects);
+      var that=this;
+      window.running.modal.modal.empty();
+   	  window.running.modal.modal.append(
+        $("<div/>",{class:"dialog-button dialog-button-left",text:"cancel"})
+        .click(function(){
+          window.running.modal.dialog.hide();
+          window.running.modal.modal.empty();
+        })
+      ).append(
+        $("<div/>",{class:"dialog-button dialog-button-right",text:"create"})
+        .click(function(){//somehow make this do the thing. with lmao nah, putting this into projects.
+          var name = $(".dialog-text-input").text();
+          if(name===""||(that.files.matchingFolder(spot,name))){
+            window.running.modal.error.text("The folder cannot be named this!");
+            window.running.modal.error.show();
+            setTimeout(function(){window.running.modal.error.hide()},5000);
+          }
+          else {
+            window.running.modal.dialog.hide();
+            window.running.modal.modal.empty();
+            spot.push([name]);
+            that.projFileList.empty();
+            that.display(that.files["projects"],that.projFileList,that.projFileList);
+            //console.log($(this).parent());
+            localStorage.text = JSON.stringify(that.files.projects);
+          }
+        })
+      ).append(
+        $("<div/>",{class:"dialog-header",text:"Create new folder"})
+      ).append(
+        $("<div/>",{class:"dialog-text-input",text:"folder"}).attr("contenteditable",'true')
+      );
+      window.running.modal.error.hide();
+  	  window.running.modal.dialog.show();
+//open when initialized.
     },
     newProject: function(){
-      var name = prompt("Project Name", "project");
-      if(name===""||(this.files.matchingFolder(this.files.projects,name)))
-        alert("Your project cannot be named this!");
-      else this.files.projects.push([name]);
-      this.projFileList.empty();
-      this.display(this.files["projects"],this.projFileList,this.projFileList);
-      localStorage.text = JSON.stringify(this.files.projects);
+      var that=this;
+      window.running.modal.modal.empty();
+   	  window.running.modal.modal.append(
+        $("<div/>",{class:"dialog-button dialog-button-left",text:"cancel"})
+        .click(function(){
+          window.running.modal.dialog.hide();
+          window.running.modal.modal.empty();
+        })
+      ).append(
+        $("<div/>",{class:"dialog-button dialog-button-right",text:"create"})
+        .click(function(){//somehow make this do the thing. with lmao nah, putting this into projects.
+          var name = $(".dialog-text-input").text();
+          if(name===""||(that.files.matchingFolder(that.files.projects,name))){
+            window.running.modal.error.text("The project cannot be named this!");
+            window.running.modal.error.show();
+            setTimeout(function(){window.running.modal.error.hide()},5000);
+          }
+          else {
+            window.running.modal.dialog.hide();
+            window.running.modal.modal.empty();
+            that.files.projects.push([name]);
+            that.projFileList.empty();
+            that.display(that.files["projects"],that.projFileList,that.projFileList);
+            //console.log($(this).parent());
+            localStorage.text = JSON.stringify(that.files.projects);
+          }
+        })
+      ).append(
+        $("<div/>",{class:"dialog-header",text:"Create new project"})
+      ).append(
+        $("<div/>",{class:"dialog-text-input",text:"project"}).attr("contenteditable",'true')
+      );
+      window.running.modal.error.hide();
+  	  window.running.modal.dialog.show();
+      // var name = prompt("Project Name", "project");
+      // if(name===""||(this.files.matchingFolder(this.files.projects,name)))
+      //   alert("Your project cannot be named this!");
+      // else this.files.projects.push([name]);
+      // this.projFileList.empty();
+      // this.display(this.files["projects"],this.projFileList,this.projFileList);
+      // localStorage.text = JSON.stringify(this.files.projects);
     },
     buttons: function(){
-      that=this;
+      var that=this;
       $('#export-project').click(
         function(){
           //so lets make the projects have a different colour to them? that seems like a good idea.
@@ -81,6 +167,7 @@ define([
           if(Object.prototype.toString.call($(".file-selected").data("filedata"))=== "[object Object]"){
             if(Object.prototype.toString.call($(".file-selected").parent().data("filedata")) === "[object Array]"){
               that.newFolder($(".file-selected").parent().data("filedata"));
+              //window.running.modal.nameInput("folder",that.newFolder,$(".file-selected").parent().data("filedata"))
             };
           };
         }
@@ -97,7 +184,7 @@ define([
         //files
         if(Object.prototype.toString.call(files[i]) === "[object Object]"){
           spot.append($('<div/>', {
-            class:"file-button ", text:Object.keys(files[i])[0]
+            class:"file-button", text:Object.keys(files[i])[0]
           }).dblclick(function(e){
             e.stopPropagation();
           }).hover(
