@@ -122,13 +122,6 @@ define([
       );
       window.running.modal.error.hide();
   	  window.running.modal.dialog.show();
-      // var name = prompt("Project Name", "project");
-      // if(name===""||(this.files.matchingFolder(this.files.projects,name)))
-      //   alert("Your project cannot be named this!");
-      // else this.files.projects.push([name]);
-      // this.projFileList.empty();
-      // this.display(this.files["projects"],this.projFileList,this.projFileList);
-      // localStorage.text = JSON.stringify(this.files.projects);
     },
     buttons: function(){
       var that=this;
@@ -214,10 +207,17 @@ define([
         //folders
         if(Object.prototype.toString.call(files[i]) === "[object Array]"){
           spot.append($('<div/>',{
-            class:"file-button", text: files[i][0]
+            class:"file-button", text: "▼"
           }).dblclick(function(e){
             e.stopPropagation();
             //console.log($(this).data("filedata"));
+            if($(".file-selected").contents().filter(function(){return this.nodeType == 3;})[0].nodeValue=="▼") {
+              $(".file-selected").contents().filter(function(){return this.nodeType == 3;})[0].nodeValue="▶";
+              console.log($(this).contents().filter(function(){return this.nodeType == 3;})[0].nodeValue)
+            }
+            else if($(".file-selected").contents().filter(function(){return this.nodeType == 3;})[0].nodeValue=="▶") {
+              $(".file-selected").contents().filter(function(){return this.nodeType == 3;})[0].nodeValue="▼";
+            }
             $(this).children('.file-button').toggle();
           }).hover(
             function(){
@@ -236,7 +236,8 @@ define([
             $(this).addClass("file-selected");
             $(this).parents().addClass("file-parent-active");
             $(main).removeClass("file-parent-active");
-          }));
+          }).append($('<span/>',{ text: files[i][0]
+          })));
           $.data(spot[0].lastChild,"filedata",files[i]);
           this.display(files[i],$(spot[0].lastChild),main);
         }
