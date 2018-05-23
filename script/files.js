@@ -38,6 +38,7 @@ define([
     matchingFile: function(spot,name){
       var matching = false;
       for(i=1;i<spot.length;i++){
+        console.log(spot)
         if(spot[i][name]!=undefined) matching = true;
       }
       return matching;
