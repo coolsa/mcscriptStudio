@@ -9,7 +9,6 @@ define([
 ],function(CodeMirror, $, projects,modal){
 	function interface(){
 		//this.$render-area = $(".main-code");
-		if(localStorage.text===undefined || localStorage.text==="undefined")localStorage.text="[\"\"]";
 		this.projcodeeditor = CodeMirror($(".project-code-replace")[0],{
 			mode: 'mcscript',
 			lineNumbers: true,
@@ -27,7 +26,7 @@ define([
 			mode: 'javascript',
 			lineNumbers: true,
 			readOnly: true,
-			value: localStorage.text,
+			value: "",
 			theme: 'pastel-on-dark',
 			scrollbarStyle: 'simple'
 		});
@@ -42,7 +41,7 @@ define([
 		buttons: function(){
 			var that = this;
 		  document.getElementById("compile").onclick = function() {
-				window.running.interface.compiler.fancy();
+				console.log(window.running.interface.projects.files.findFiles($($(".file-selected").parents(".file-button")[$(".file-selected").parents(".file-button").length-1]).data("filedata")));
 			};
 			document.getElementById("undo").onclick = function() {
 				window.running.interface.projcodeeditor.execCommand("undo");

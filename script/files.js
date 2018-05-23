@@ -11,7 +11,19 @@ define([
 
   */
   function files(){
-    this.projects = JSON.parse(localStorage.text);
+    try{
+      this.projects = JSON.parse(localStorage.text);
+      if(this.projects && typeof this.projects=== "object"){
+
+      }else{
+        this.projects = [""]
+      }
+    }catch(e){
+      this.projects = [""]
+    }
+    localStorage.text = JSON.stringify(this.projects);
+    // if(localStorage.text===undefined || localStorage.text==="undefined")localStorage.text="[\"\"]";
+    // this.projects = JSON.parse(localStorage.text);
     //this is a test for now. no longer needed really.
     // this.projects = [
     //   "skip",
@@ -38,7 +50,6 @@ define([
     matchingFile: function(spot,name){
       var matching = false;
       for(i=1;i<spot.length;i++){
-        console.log(spot)
         if(spot[i][name]!=undefined) matching = true;
       }
       return matching;
@@ -49,6 +60,19 @@ define([
         if(spot[i][0]===name) matching = true;
       }
       return matching;
+    },
+    findFiles: function(folder,files = {},prefix=""){
+      for(var i=1;i<folder.length;i++){
+        if(Object.prototype.toString.call(folder[i]) === "[object Object]"){
+          files[prefix + "/" + Object.keys(folder[i])[0]] = folder[i][Object.keys(folder[i])[0]];
+        }
+
+        //folders
+        if(Object.prototype.toString.call(folder[i]) === "[object Array]"){
+          this.findFiles(folder[i],files,prefix+"/"+folder[i][0]);
+        }
+      }
+      return files;
     }
   }
   return files;

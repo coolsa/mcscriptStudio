@@ -36,8 +36,8 @@ define([
             var file = {};
             file[name] = [""];
             files.push(file);
-            that.newFileButton(files,spot,file);
             localStorage.text = JSON.stringify(that.files.projects);
+            that.newFileButton(files,spot,file);
           }
         })
       ).append(
@@ -70,12 +70,12 @@ define([
             window.running.modal.dialog.hide();
             window.running.modal.modal.empty();
             var file = [name]
-            spot.push(file);
+            files.push(file);
+            localStorage.text = JSON.stringify(that.files.projects);
             that.newFolderButton(files,spot,file);
             // that.projFileList.empty();
             // that.display(that.files["projects"],that.projFileList);
             //console.log($(this).parent());
-            localStorage.text = JSON.stringify(that.files.projects);
           }
         })
       ).append(
@@ -85,9 +85,9 @@ define([
       );
       window.running.modal.error.hide();
   	  window.running.modal.dialog.show();
-//open when initialized.
+      //open when initialized.
     },
-    newProject: function(){
+    newProject: function(files,spot){
       var that=this;
       window.running.modal.modal.empty();
    	  window.running.modal.modal.append(
@@ -108,17 +108,46 @@ define([
           else {
             window.running.modal.dialog.hide();
             window.running.modal.modal.empty();
-            that.files.projects.push([name]);
-            that.projFileList.empty();
-            that.display(that.files["projects"],that.projFileList);
+            var file = [name];
+            that.files.projects.push(file);
+            // that.projFileList.empty();
+            // that.display(that.files["projects"],that.projFileList);
             //console.log($(this).parent());
             localStorage.text = JSON.stringify(that.files.projects);
+            that.newFolderButton(that.files.projects,that.projFileList,file);
           }
         })
       ).append(
         $("<div/>",{class:"dialog-header",text:"Create new project"})
       ).append(
         $("<div/>",{class:"dialog-text-input",text:"project"}).attr("contenteditable",'true')
+      );
+      window.running.modal.error.hide();
+  	  window.running.modal.dialog.show();
+    },
+    confirmDelete: function(spot){
+      var that=this;
+      window.running.modal.modal.empty();
+   	  window.running.modal.modal.append(
+        $("<div/>",{class:"dialog-button dialog-button-left",text:"cancel"})
+        .click(function(){
+          window.running.modal.dialog.hide();
+          window.running.modal.modal.empty();
+        })
+      ).append(
+        $("<div/>",{class:"dialog-button dialog-button-right",text:"delete"})
+        .click(function(){
+          var index = spot.parent().data("filedata").indexOf(spot.data("filedata"));
+          console.log(spot.parent().data("filedata"),index,spot.parent().data("filedata")[index]);
+          if(index>-1) spot.parent().data("filedata").splice(index,index)
+          localStorage.text = JSON.stringify(that.files.projects);
+          console.log(spot.parent().data("filedata"),index);
+          spot.remove();
+          window.running.modal.dialog.hide();
+          window.running.modal.modal.empty();
+        })
+      ).append(
+        $("<div/>",{class:"dialog-header",text:"Cannot undo Deletion! Confirm?"})
       );
       window.running.modal.error.hide();
   	  window.running.modal.dialog.show();
@@ -133,11 +162,7 @@ define([
       );
       $('#delete').click(
         function(){
-          var index = $(".file-selected").parent().data("filedata").indexOf($(".file-selected").data("filedata"));
-          if(index>-1) $(".file-selected").parent().data("filedata").splice(index,index)
-          that.projFileList.empty();
-          localStorage.text = JSON.stringify(that.files.projects);
-          that.display(that.files["projects"],that.projFileList);
+          that.confirmDelete($(".file-selected"));
         }
       );
       $('#new-file').click(
@@ -197,7 +222,7 @@ define([
         $(that.projFileList).removeClass("file-parent-active");
         window.running.interface.projcodeeditor.setValue($(this).data("filedata")[Object.keys($(this).data("filedata"))[0]][0]);
       }));
-      $.data(spot[0].lastChild,"filedata",folder);
+      $.data(spot[0].lastChild,"filedata",file);
     },
     newFolderButton: function(folder,spot,file){
       spot.append($('<div/>',{
@@ -205,14 +230,15 @@ define([
       }).dblclick(function(e){
         e.stopPropagation();
         //console.log($(this).data("filedata"));
-        if($(".file-selected").contents().filter(function(){return this.nodeType == 3;})[0].nodeValue=="▼") {
-          $(".file-selected").contents().filter(function(){return this.nodeType == 3;})[0].nodeValue="▶";
+        if($(this).contents().filter(function(){return this.nodeType == 3;})[0].nodeValue=="▼") {
+          $(this).contents().filter(function(){return this.nodeType == 3;})[0].nodeValue="▶";
+          $(this).children('.file-button').hide();
           //console.log($(this).contents().filter(function(){return this.nodeType == 3;})[0].nodeValue)
         }
-        else if($(".file-selected").contents().filter(function(){return this.nodeType == 3;})[0].nodeValue=="▶") {
-          $(".file-selected").contents().filter(function(){return this.nodeType == 3;})[0].nodeValue="▼";
+        else if($(this).contents().filter(function(){return this.nodeType == 3;})[0].nodeValue=="▶") {
+          $(this).contents().filter(function(){return this.nodeType == 3;})[0].nodeValue="▼";
+          $(this).children('.file-button').show();
         }
-        $(this).children('.file-button').toggle();
       }).hover(
         function(){
           $(that.projFileList).find("*").removeClass("file-hover");
@@ -245,39 +271,6 @@ define([
         //folders
         if(Object.prototype.toString.call(files[i]) === "[object Array]"){
           this.newFolderButton(files[i],spot,files[i]);
-          // spot.append($('<div/>',{
-          //   class:"file-button", text: "▼"
-          // }).dblclick(function(e){
-          //   e.stopPropagation();
-          //   //console.log($(this).data("filedata"));
-          //   if($(".file-selected").contents().filter(function(){return this.nodeType == 3;})[0].nodeValue=="▼") {
-          //     $(".file-selected").contents().filter(function(){return this.nodeType == 3;})[0].nodeValue="▶";
-          //     //console.log($(this).contents().filter(function(){return this.nodeType == 3;})[0].nodeValue)
-          //   }
-          //   else if($(".file-selected").contents().filter(function(){return this.nodeType == 3;})[0].nodeValue=="▶") {
-          //     $(".file-selected").contents().filter(function(){return this.nodeType == 3;})[0].nodeValue="▼";
-          //   }
-          //   $(this).children('.file-button').toggle();
-          // }).hover(
-          //   function(){
-          //     $(that.projFileList).find("*").removeClass("file-hover");
-          //     $(that.projFileList).find("*").removeClass("file-active");
-          //     $(this).addClass("file-hover");
-          //     $(this).parents().addClass("file-active");
-          //     $(that.projFileList).removeClass("file-active");
-          //   }, function(){
-          //     $(this).removeClass("file-hover");
-          //   }
-          // ).click(function(e){
-          //   e.stopPropagation();
-          //   $(that.projFileList).find("*").removeClass("file-selected");
-          //   $(that.projFileList).find("*").removeClass("file-parent-active");
-          //   $(this).addClass("file-selected");
-          //   $(this).parents().addClass("file-parent-active");
-          //   $(that.projFileList).removeClass("file-parent-active");
-          // }).append($('<span/>',{ text: files[i][0]
-          // })));
-          // $.data(spot[0].lastChild,"filedata",files[i]);
           this.display(files[i],$(spot[0].lastChild));
         }
       }
