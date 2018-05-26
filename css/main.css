@@ -28,6 +28,9 @@ body {
   height:100%;
   background-color: #232020aa;
 }
+.dialog-button-input {
+	display:none;
+}
 .dialog-center{
   margin:10% auto;
   width:50%;

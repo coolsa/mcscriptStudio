@@ -1,7 +1,8 @@
 define([
   'files',
-  'jquery'
-],function(files,$){
+  'jquery',
+  'compile'
+],function(files,$,compile){
   function projects(){
     this.projFileList = $('.project-file-replace');
     this.buttons();
@@ -138,10 +139,10 @@ define([
         $("<div/>",{class:"dialog-button dialog-button-right",text:"delete"})
         .click(function(){
           var index = spot.parent().data("filedata").indexOf(spot.data("filedata"));
-          console.log(spot.parent().data("filedata"),index,spot.parent().data("filedata")[index]);
-          if(index>-1) spot.parent().data("filedata").splice(index,index)
+          //console.log(spot.parent().data("filedata"),index,spot.parent().data("filedata")[index]);
+          if(index>-1) spot.parent().data("filedata").splice(index,1)
           localStorage.text = JSON.stringify(that.files.projects);
-          console.log(spot.parent().data("filedata"),index);
+          //console.log(spot.parent().data("filedata"),index);
           spot.remove();
           window.running.modal.dialog.hide();
           window.running.modal.modal.empty();
@@ -195,6 +196,16 @@ define([
         that.newProject();
         }
       );
+      $('#import-project').click(function(){
+        that.importProject();
+      });
+      $('#export-project').click(function(){
+        that.exportProject();
+      });
+      $('#compile').click(function(){
+        //put your compiler stuff here.
+        //compile();
+      });
     },//renders the buttons
     newFileButton: function(folder,spot,file){
       spot.append($('<div/>', {
@@ -274,6 +285,80 @@ define([
           this.display(files[i],$(spot[0].lastChild));
         }
       }
+    },
+    importProject: function(){
+      //get the data, then push it it with this.projFileList.data("filedata").push( DATA GOES HERE)
+      //then render it with this.display(["",DATA GOES HERE],this.projFileList)
+      //got to fetch the input some way though.
+      //upload request through modal? sureeee.
+      var that=this;
+      window.running.modal.modal.empty();
+   	  window.running.modal.modal.append(
+        $("<div/>",{class:"dialog-button dialog-button-left",text:"cancel"})
+        .click(function(){
+          window.running.modal.dialog.hide();
+          window.running.modal.modal.empty();
+        })
+      ).append(
+        $("<input/>",{class:"dialog-button-input",id:"files",type:"file"})
+        .change(function(){
+          file = this.files[0];
+          var reader = new FileReader();
+          reader.onloadend = function() {
+            var data = JSON.parse(reader.result)
+            //console.log(); // IT WORKS HOLY COW!
+            that.projFileList.data("filedata").push(data);
+            that.display(["",data],that.projFileList)
+            localStorage.text = JSON.stringify(that.files.projects);
+            window.running.modal.dialog.hide();
+            window.running.modal.modal.empty();
+          }
+          reader.readAsText(file);
+        })
+      ).append($("<label/>",{class:"dialog-button dialog-button-right",text:"upload",for:"files",text:"upload"})
+      ).append(
+        $("<div/>",{class:"dialog-header",text:"Import project from json file." })
+      );
+      window.running.modal.error.hide();
+  	  window.running.modal.dialog.show();
+    },
+    exportProject: function(){
+      var that=this;
+      window.running.modal.modal.empty();
+   	  window.running.modal.modal.append(
+        $("<div/>",{class:"dialog-button dialog-button-left",text:"cancel"})
+        .click(function(){
+          window.running.modal.dialog.hide();
+          window.running.modal.modal.empty();
+        })
+      ).append(
+        $("<div/>",{class:"dialog-button dialog-button-right",text:"download"})
+        .click(function(){
+          var data = $(".project-file-replace").children(".file-selected").data("filedata");//if project is clicked on
+          if(data === undefined) data = that.projFileList.children(".file-parent-active").data("filedata");//if file/folder is clicked on.
+          name = data.slice(0,1)[0];
+          data = JSON.stringify(data)
+          console.log(name[0],data);
+          var blob = new Blob([data], {type: 'text/csv'});
+          if(window.navigator.msSaveOrOpenBlob) {
+              window.navigator.msSaveBlob(blob, name+".json");
+          }
+          else{
+              var elem = window.document.createElement('a');
+              elem.href = window.URL.createObjectURL(blob);
+              elem.download = name+".json";
+              document.body.appendChild(elem);
+              elem.click();
+              document.body.removeChild(elem);
+          }
+          window.running.modal.dialog.hide();
+          window.running.modal.modal.empty();
+        })
+      ).append(
+        $("<div/>",{class:"dialog-header",text:"Exporting project as json file." })
+      );
+      window.running.modal.error.hide();
+  	  window.running.modal.dialog.show();
     }
   }
   return projects;

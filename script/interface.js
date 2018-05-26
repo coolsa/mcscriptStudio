@@ -3,10 +3,11 @@ define([
 	'jquery',
 	'projects',
 	'modal',
+	'compile',
 	'jqueryresizable',
 	'codemirror/mode/javascript/javascript',
 	'codemirror/addon/scroll/simplescrollbars'
-],function(CodeMirror, $, projects,modal){
+],function(CodeMirror, $, projects,modal,compile){
 	function interface(){
 		//this.$render-area = $(".main-code");
 		this.projcodeeditor = CodeMirror($(".project-code-replace")[0],{
@@ -19,8 +20,8 @@ define([
 		this.projcodeeditor.setSize($(".center").width()-$(".output-render").width()-$(".splitter").width()-250,'100%');
 		var projcodeeditor = this.projcodeeditor;
 		this.projcodeeditor.on("change",function(){
-			localStorage.text = JSON.stringify(window.running.interface.projects.files.projects);
 			$(".file-file-selected").data("filedata")[Object.keys($(".file-file-selected").data("filedata"))[0]][0] = projcodeeditor.getValue();
+			localStorage.text = JSON.stringify(window.running.interface.projects.files.projects);
 		});
 		this.outcodeeditor = CodeMirror($(".output-code-replace")[0],{
 			mode: 'javascript',
