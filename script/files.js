@@ -64,7 +64,7 @@ define([
     findFiles: function(folder,files = {},prefix=""){
       for(var i=1;i<folder.length;i++){
         if(Object.prototype.toString.call(folder[i]) === "[object Object]"){
-          files[prefix + "/" + Object.keys(folder[i])[0]] = folder[i][Object.keys(folder[i])[0]];
+          files[prefix + "/" + Object.keys(folder[i])[0]+".mcscript"] = folder[i][Object.keys(folder[i])[0]];
         }
 
         //folders

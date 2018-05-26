@@ -155,12 +155,6 @@ define([
     },
     buttons: function(){
       var that=this;
-      $('#export-project').click(
-        function(){
-          //so lets make the projects have a different colour to them? that seems like a good idea.
-
-        }
-      );
       $('#delete').click(
         function(){
           that.confirmDelete($(".file-selected"));
@@ -205,6 +199,7 @@ define([
       $('#compile').click(function(){
         //put your compiler stuff here.
         //compile();
+        // console.log(that.files.findFiles(that.files.projects));
       });
     },//renders the buttons
     newFileButton: function(folder,spot,file){
@@ -306,12 +301,24 @@ define([
           var reader = new FileReader();
           reader.onloadend = function() {
             var data = JSON.parse(reader.result)
-            //console.log(); // IT WORKS HOLY COW!
-            that.projFileList.data("filedata").push(data);
-            that.display(["",data],that.projFileList)
-            localStorage.text = JSON.stringify(that.files.projects);
-            window.running.modal.dialog.hide();
-            window.running.modal.modal.empty();
+            var name = data[0];
+            if(name===""||(that.files.matchingFolder(that.files.projects,name))){
+              name = file.name.slice(file.name,file.name.length-5);
+              data[0] = name;
+              console.log(data[0]);
+            }
+            if(name===""||(that.files.matchingFolder(that.files.projects,name))){
+              window.running.modal.error.text("The project name is damaging!");
+              window.running.modal.error.show();
+              setTimeout(function(){window.running.modal.error.hide()},5000);
+            }
+            else {
+              that.projFileList.data("filedata").push(data);
+              that.display(["",data],that.projFileList)
+              localStorage.text = JSON.stringify(that.files.projects);
+              window.running.modal.dialog.hide();
+              window.running.modal.modal.empty();
+            }
           }
           reader.readAsText(file);
         })

@@ -36,23 +36,21 @@ define([
 		this.buttons();
 		this.projects = new projects();
 		this.modal = new modal();
-//		this.compiler = new compiler($(".compiled-commands"),this.projcodeeditor);
 	}
 	interface.prototype = {
 		buttons: function(){
 			var that = this;
-		  document.getElementById("compile").onclick = function() {
-				console.log(window.running.interface.projects.files.findFiles($($(".file-selected").parents(".file-button")[$(".file-selected").parents(".file-button").length-1]).data("filedata")));
-			};
-			document.getElementById("undo").onclick = function() {
-				window.running.interface.projcodeeditor.execCommand("undo");
-			};
-			document.getElementById("redo").onclick = function() {
-				window.running.interface.projcodeeditor.execCommand("redo");
-			};
-			// $(".compiled-commands")[0].onclick = function() {
-			// 	that.selectCompiled();
-			// };
+		  $("#compile").click(function() {
+        var data = $(".project-file-replace").children(".file-selected").data("filedata");//if project is clicked on
+        if(data === undefined) data = that.projects.projFileList.children(".file-parent-active").data("filedata");//if file/folder is clicked on.
+				console.log(that.projects.files.findFiles(data));
+			});
+			$("#undo").click(function() {
+				that.projcodeeditor.execCommand("undo");
+			});
+			$("#redo").click(function() {
+				that.projcodeeditor.execCommand("redo");
+			});
 		},
 		slider: function(){
 			var that = this;
