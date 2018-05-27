@@ -7,7 +7,7 @@ define(['mcscript','files'],function(mcscript,files){
     compile: function(files){
       this.compiledFiles = this.compileFiles(files);//got to return something that i can work with in an actual functional style.
       //now to do things with output. ohhhh boy. copy pasting project.
-      
+
     },
     //porting the mcscript forweb into here.
     compileFiles: function(rawFiles){
@@ -61,7 +61,7 @@ define(['mcscript','files'],function(mcscript,files){
         let editFiles = compiledFiles.find(function (obj) { if (obj.name === editdata.name && obj.dir === editdata.dir) return obj.name});
         if(editFiles) compiledFiles[compiledFiles.indexOf(editFiles)].data += "\n" + editdata.data;
         else {
-          compiledFiles.push({dir: file.dir, name: fileName  + '.mcfunction', data: dat});
+          compiledFiles.push({dir: editdata.dir, name: editdata.name, data: editdata.data});
         }
       }
       return compiledFiles;
