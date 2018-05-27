@@ -34,6 +34,7 @@ define([
 		this.outcodeeditor.setSize($(".center").width()-$(".project-render").width()-$(".splitter").width()-250,'100%');
 		this.slider();
 		this.buttons();
+		this.compile = new compile();
 		this.projects = new projects();
 		this.modal = new modal();
 	}
@@ -43,7 +44,7 @@ define([
 		  $("#compile").click(function() {
         var data = $(".project-file-replace").children(".file-selected").data("filedata");//if project is clicked on
         if(data === undefined) data = that.projects.projFileList.children(".file-parent-active").data("filedata");//if file/folder is clicked on.
-				console.log(that.projects.files.findFiles(data));
+				that.compile.compile(that.projects.files.fileTree(data,[],data[0]+"/functions"));
 			});
 			$("#undo").click(function() {
 				that.projcodeeditor.execCommand("undo");

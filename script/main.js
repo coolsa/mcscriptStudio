@@ -12,7 +12,7 @@ require.config( {
     'mcscript': {
       exports: 'mcscript',
       init: function(){
-        return {InputStream, TokenStream, parse, generate, checkFilename, handleFiles, myExtObject};
+        return {InputStream, TokenStream, parse, generate, checkFilename, handleFiles, compile, myExtObject};
       }
     }
   },
