@@ -4,10 +4,12 @@ define([
 	'projects',
 	'modal',
 	'compile',
+	'files',
+	'output',
 	'jqueryresizable',
 	'codemirror/mode/javascript/javascript',
 	'codemirror/addon/scroll/simplescrollbars'
-],function(CodeMirror, $, projects,modal,compile){
+],function(CodeMirror, $, projects,modal,compile,files,output){
 	function interface(){
 		//this.$render-area = $(".main-code");
 		this.projcodeeditor = CodeMirror($(".project-code-replace")[0],{
@@ -34,8 +36,10 @@ define([
 		this.outcodeeditor.setSize($(".center").width()-$(".project-render").width()-$(".splitter").width()-250,'100%');
 		this.slider();
 		this.buttons();
+		this.files = new files();
 		this.compile = new compile();
-		this.projects = new projects();
+		this.projects = new projects(this.files);
+		this.output = new output(this.files);
 		this.modal = new modal();
 	}
 	interface.prototype = {
@@ -44,7 +48,9 @@ define([
 		  $("#compile").click(function() {
         var data = $(".project-file-replace").children(".file-selected").data("filedata");//if project is clicked on
         if(data === undefined) data = that.projects.projFileList.children(".file-parent-active").data("filedata");//if file/folder is clicked on.
-				that.compile.compile(that.projects.files.fileTree(data,[],data[0]+"/functions"));
+				that.compile.compile(that.files.fileTree(data,[],data[0]+"/functions"));
+				that.output.outFileList.empty();
+		    that.output.display(that.files.output,$('.output-file-replace'));
 			});
 			$("#undo").click(function() {
 				that.projcodeeditor.execCommand("undo");

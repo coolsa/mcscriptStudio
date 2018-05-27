@@ -1,15 +1,14 @@
 define([
   'files',
   'jquery',
-  'compile'
+  'compile',
 ],function(files,$,compile){
-  function projects(){
+  function projects(files){
     this.projFileList = $('.project-file-replace');
     this.buttons();
-    this.files = new files();
+    this.files = files;
     //console.log($.data(this.projFileList,"filedata"));
     this.display(this.files["projects"],this.projFileList);
-    this.selectedButton = undefined;
     this.projFileList.data("filedata",this.files.projects);
   }
   projects.prototype = {
@@ -209,23 +208,23 @@ define([
         e.stopPropagation();
       }).hover(
         function(){
-          $(that.projFileList).find("*").removeClass("file-hover");
-          $(that.projFileList).find("*").removeClass("file-active");
+          $(".file-hover").removeClass("file-hover");
+          $(".file-active").removeClass("file-active");
           $(this).addClass("file-hover");
           $(this).parents().addClass("file-active");
-          $(that.projFileList).removeClass("file-active");
+          $('.project-file-replace').removeClass("file-active")
         }, function(){
           $(this).removeClass("file-hover");
         }
       ).click(function(e){
         e.stopPropagation();
-        $(that.projFileList).find("*").removeClass("file-selected");
-        $(that.projFileList).find("*").removeClass("file-file-selected");
-        $(that.projFileList).find("*").removeClass("file-parent-active");
+        $(".file-selected").removeClass("file-selected");
+        $(".file-file-selected").removeClass("file-file-selected");
+        $(".file-parent-active").removeClass("file-parent-active");
         $(this).addClass("file-selected");
         $(this).addClass("file-file-selected");
         $(this).parents().addClass("file-parent-active");
-        $(that.projFileList).removeClass("file-parent-active");
+        $('.project-file-replace').removeClass("file-parent-active");
         window.running.interface.projcodeeditor.setValue($(this).data("filedata")[Object.keys($(this).data("filedata"))[0]][0]);
       }));
       $.data(spot[0].lastChild,"filedata",file);
@@ -247,21 +246,21 @@ define([
         }
       }).hover(
         function(){
-          $(that.projFileList).find("*").removeClass("file-hover");
-          $(that.projFileList).find("*").removeClass("file-active");
+          $(".file-hover").removeClass("file-hover");
+          $(".file-active").removeClass("file-active");
           $(this).addClass("file-hover");
           $(this).parents().addClass("file-active");
-          $(that.projFileList).removeClass("file-active");
+          $('.project-file-replace').removeClass("file-active")
         }, function(){
           $(this).removeClass("file-hover");
         }
       ).click(function(e){
         e.stopPropagation();
-        $(that.projFileList).find("*").removeClass("file-selected");
-        $(that.projFileList).find("*").removeClass("file-parent-active");
+        $(".file-selected").removeClass("file-selected");
+        $(".file-parent-active").removeClass("file-parent-active");
         $(this).addClass("file-selected");
         $(this).parents().addClass("file-parent-active");
-        $(that.projFileList).removeClass("file-parent-active");
+        $('.project-file-replace').removeClass("file-parent-active");
       }).append($('<span/>',{ text: file[0]
       })));
       $.data(spot[0].lastChild,"filedata",file);

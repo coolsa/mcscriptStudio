@@ -7,7 +7,7 @@ define(['mcscript','files'],function(mcscript,files){
     compile: function(files){
       this.compiledFiles = this.compileFiles(files);//got to return something that i can work with in an actual functional style.
       //now to do things with output. ohhhh boy. copy pasting project.
-
+      window.running.interface.files.output = window.running.interface.files.treeFolders(this.compiledFiles);
     },
     //porting the mcscript forweb into here.
     compileFiles: function(rawFiles){
@@ -44,7 +44,13 @@ define(['mcscript','files'],function(mcscript,files){
           }
         }
         mcscript.checkFilename(data,file.name,function(fileName,dat){
-          compiledFiles.push({dir: file.dir, name: fileName  + '.mcfunction', data: dat.join("\n")});
+          var fileNames = fileName.split('/');
+          var directory = file.dir;
+          for(var i = 0; i<fileNames.length-1;i++){
+            directory += "/"+(fileNames[i]);
+          }
+          console.log(fileName.split('/'));
+          compiledFiles.push({dir: directory, name: fileNames[fileNames.length-1]  + '.mcfunction', data: dat.join("\n")});
         });
         extendArr.push("");
         mcscript.checkFilename(extendArr,file.name,function(fileName,dat){

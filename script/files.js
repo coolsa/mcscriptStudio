@@ -22,19 +22,21 @@ define([
       this.projects = [""]
     }
     localStorage.text = JSON.stringify(this.projects);
+    this.output = [];
   }
   files.prototype = {
     matchingFile: function(spot,name){
       var matching = false;
       for(i=1;i<spot.length;i++){
-        if(spot[i][name]!=undefined) matching = true;
+        if(spot[i][name]!=undefined) matching = spot[i][name];
       }
       return matching;
     },
     matchingFolder: function(spot,name){
+      //console.log(name);
       var matching = false;
       for(i=1;i<spot.length;i++){
-        if(spot[i][0]===name) matching = true;
+        if(spot[i][0]===name) matching = spot[i];
       }
       return matching;
     },
@@ -57,7 +59,27 @@ define([
       return files;
     },
     treeFolders: function(fileTree){//with dir, name, content revert back to old nested arrays.
-
+      var output = [""];
+      for(let file in fileTree){
+        var tree = fileTree[file].dir.split('/')
+        var currentFolder = output;
+        for(var i = 0; i<tree.length;i++){
+          var test = this.matchingFolder(currentFolder,tree[i])
+          //console.log(test);
+          if(!test){
+            var newFolder = [tree[i]];
+            currentFolder.push(newFolder);
+            currentFolder=newFolder;
+          }
+          else {
+            currentFolder=test;
+          };
+        }
+        var data = {};
+        data[fileTree[file].name] = [fileTree[file].data];
+        if(fileTree[file].data != "") currentFolder.push(data); //dont add empty files
+      }
+      return output;
     }
   }
   return files;
