@@ -59,7 +59,7 @@ define([
       return files;
     },
     treeFolders: function(fileTree){//with dir, name, content revert back to old nested arrays.
-      var output = [""];
+      var output = ["data"];
       for(let file in fileTree){
         var tree = fileTree[file].dir.split('/')
         var currentFolder = output;

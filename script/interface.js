@@ -48,7 +48,7 @@ define([
 		  $("#compile").click(function() {
         var data = $(".project-file-replace").children(".file-selected").data("filedata");//if project is clicked on
         if(data === undefined) data = that.projects.projFileList.children(".file-parent-active").data("filedata");//if file/folder is clicked on.
-				that.compile.compile(that.files.fileTree(data,[],data[0]+"/functions"));
+				that.compile.compile(that.files.fileTree(data,[],data[0]+"/data/"+data[0]+"/functions"));
 				that.output.outFileList.empty();
 		    that.output.display(that.files.output,$('.output-file-replace'));
 			});

@@ -345,7 +345,7 @@ define([
           name = data.slice(0,1)[0];
           data = JSON.stringify(data)
           console.log(name[0],data);
-          var blob = new Blob([data], {type: 'text/csv'});
+          var blob = new Blob([data], {type: 'text/json'});
           if(window.navigator.msSaveOrOpenBlob) {
               window.navigator.msSaveBlob(blob, name+".json");
           }

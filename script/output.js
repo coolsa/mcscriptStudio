@@ -1,8 +1,9 @@
 define([
   'files',
   'jquery',
-  'compile'
-],function(files,$,compile){
+  'compile',
+  'jszip'
+],function(files,$,compile,JSZip){
   function output(files){
     this.outFileList = $('.output-file-replace');
     this.buttons();
@@ -12,70 +13,6 @@ define([
     this.outFileList.data("filedata",this.files.output);
   }
   output.prototype = {
-  //   newFileButton: function(folder,spot,file){
-  //     spot.append($('<div/>', {
-  //       class:"output-file-button", text:Object.keys(file)[0]
-  //     }).dblclick(function(e){
-  //       e.stopPropagation();
-  //     }).hover(
-  //       function(){
-  //         $(that.outFileList).find("*").removeClass("output-file-hover");
-  //         $(that.outFileList).find("*").removeClass("output-file-active");
-  //         $(this).addClass("output-file-hover");
-  //         $(this).parents().addClass("output-file-active");
-  //         $(that.outFileList).removeClass("output-file-active");
-  //       }, function(){
-  //         $(this).removeClass("output-file-hover");
-  //       }
-  //     ).click(function(e){
-  //       e.stopPropagation();
-  //       $(that.outFileList).find("*").removeClass("output-file-selected");
-  //       $(that.outFileList).find("*").removeClass("output-file-file-selected");
-  //       $(that.outFileList).find("*").removeClass("output-file-parent-active");
-  //       $(this).addClass("output-file-selected");
-  //       $(this).addClass("output-file-file-selected");
-  //       $(this).parents().addClass("output-file-parent-active");
-  //       $(that.outFileList).removeClass("output-file-parent-active");
-  //       window.running.interface.outcodeeditor.setValue($(this).data("filedata")[Object.keys($(this).data("filedata"))[0]][0]);
-  //     }));
-  //     $.data(spot[0].lastChild,"filedata",file);
-  //   },
-  //   newFolderButton: function(folder,spot,file){
-  //     spot.append($('<div/>',{
-  //       class:"output-file-button", text: "▼"
-  //     }).dblclick(function(e){
-  //       e.stopPropagation();
-  //       //console.log($(this).data("filedata"));
-  //       if($(this).contents().filter(function(){return this.nodeType == 3;})[0].nodeValue=="▼") {
-  //         $(this).contents().filter(function(){return this.nodeType == 3;})[0].nodeValue="▶";
-  //         $(this).children('.output-file-button').hide();
-  //         //console.log($(this).contents().filter(function(){return this.nodeType == 3;})[0].nodeValue)
-  //       }
-  //       else if($(this).contents().filter(function(){return this.nodeType == 3;})[0].nodeValue=="▶") {
-  //         $(this).contents().filter(function(){return this.nodeType == 3;})[0].nodeValue="▼";
-  //         $(this).children('.output-file-button').show();
-  //       }
-  //     }).hover(
-  //       function(){
-  //         $(that.outFileList).find("*").removeClass("output-file-hover");
-  //         $(that.outFileList).find("*").removeClass("output-file-active");
-  //         $(this).addClass("output-file-hover");
-  //         $(this).parents().addClass("output-file-active");
-  //         $(that.outFileList).removeClass("output-file-active");
-  //       }, function(){
-  //         $(this).removeClass("output-file-hover");
-  //       }
-  //     ).click(function(e){
-  //       e.stopPropagation();
-  //       $(that.outFileList).find("*").removeClass("output-file-selected");
-  //       $(that.outFileList).find("*").removeClass("output-file-parent-active");
-  //       $(this).addClass("output-file-selected");
-  //       $(this).parents().addClass("output-file-parent-active");
-  //       $(that.outFileList).removeClass("output-file-parent-active");
-  //     }).append($('<span/>',{ text: file[0]
-  //     })));
-  //     $.data(spot[0].lastChild,"filedata",file);
-  //   },
     newFileButton: function(folder,spot,file){
       spot.append($('<div/>', {
         class:"output-file-button", text:Object.keys(file)[0]
@@ -112,12 +49,12 @@ define([
         //console.log($(this).data("filedata"));
         if($(this).contents().filter(function(){return this.nodeType == 3;})[0].nodeValue=="▼") {
           $(this).contents().filter(function(){return this.nodeType == 3;})[0].nodeValue="▶";
-          $(this).children('.file-button').hide();
+          $(this).children('.output-file-button').hide();
           //console.log($(this).contents().filter(function(){return this.nodeType == 3;})[0].nodeValue)
         }
         else if($(this).contents().filter(function(){return this.nodeType == 3;})[0].nodeValue=="▶") {
           $(this).contents().filter(function(){return this.nodeType == 3;})[0].nodeValue="▼";
-          $(this).children('.file-button').show();
+          $(this).children('.output-file-button').show();
         }
       }).hover(
         function(){
@@ -161,6 +98,37 @@ define([
         }
       }
     },
+    zipRecurse: function(data,files){
+      console.log(data);
+      for(var i = 1; i<files.length; i++){
+        if(Object.prototype.toString.call(files[i]) === "[object Array]"){
+          this.zipRecurse(data.folder(files[i][0]),files[i]);
+        }
+        if(Object.prototype.toString.call(files[i]) === "[object Object]"){
+          data.file(Object.keys(files[i])[0],files[i][Object.keys(files[i])[0]][0]);
+        }
+      }
+    },
+    downloadFiles: function(){
+      var that = this;
+      zip = new JSZip();
+      this.zipRecurse(zip,this.files.output);
+      // for(var i = 1; i<this.files.output.length;i++){
+      //   console.log(this.files.output[i]);
+      // }
+      zip.generateAsync({type:"blob"}).then(function(blob){
+      if(window.navigator.msSaveOrOpenBlob) {
+          window.navigator.msSaveBlob(blob, that.files.output[1][0]+".zip");
+      }
+      else{
+          var elem = window.document.createElement('a');
+          elem.href = window.URL.createObjectURL(blob);
+          elem.download = that.files.output[1][0]+".zip";
+          document.body.appendChild(elem);
+          elem.click();
+          document.body.removeChild(elem);
+      }})
+    },
     downloadProject: function(){
       var that=this;
       window.running.modal.modal.empty();
@@ -174,22 +142,12 @@ define([
         $("<div/>",{class:"dialog-button dialog-button-right",text:"download"})
         .click(function(){
           var data = $(".output-output-file-replace").data("filedata");//whatever is in output is to be downloaded.
+          that.downloadFiles();
+
           // if(data === undefined) data = that.outFileList.children(".output-file-parent-active").data("filedata");//if file/folder is clicked on.
           // name = data.slice(0,1)[0];
           // data = JSON.stringify(data)
           // console.log(name[0],data);
-          // var blob = new Blob([data], {type: 'text/csv'});
-          // if(window.navigator.msSaveOrOpenBlob) {
-          //     window.navigator.msSaveBlob(blob, name+".json");
-          // }
-          // else{
-          //     var elem = window.document.createElement('a');
-          //     elem.href = window.URL.createObjectURL(blob);
-          //     elem.download = name+".json";
-          //     document.body.appendChild(elem);
-          //     elem.click();
-          //     document.body.removeChild(elem);
-          // } //all of this is useless for output.
           window.running.modal.dialog.hide();
           window.running.modal.modal.empty();
         })
