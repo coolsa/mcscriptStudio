@@ -61,9 +61,9 @@ define([
     treeFolders: function(fileTree){//with dir, name, content revert back to old nested arrays.
       var output = ["data"];
       for(let file in fileTree){
-        var tree = fileTree[file].dir.split('/')
+        var tree = fileTree[file].name.split('/')
         var currentFolder = output;
-        for(var i = 0; i<tree.length;i++){
+        for(var i = 0; i<tree.length-1;i++){
           var test = this.matchingFolder(currentFolder,tree[i])
           //console.log(test);
           if(!test){
@@ -76,7 +76,7 @@ define([
           };
         }
         var data = {};
-        data[fileTree[file].name] = [fileTree[file].data];
+        data[tree[tree.length-1]] = [fileTree[file].data];
         if(fileTree[file].data != "") currentFolder.push(data); //dont add empty files
       }
       return output;
