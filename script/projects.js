@@ -37,7 +37,7 @@ define([
             file[name] = [""];
             files.push(file);
             localStorage.text = JSON.stringify(that.files.projects);
-            that.newFileButton(files,spot,file);
+            that.newFileButton(files,spot,file,true);
           }
         })
       ).append(
@@ -72,7 +72,7 @@ define([
             var file = [name]
             files.push(file);
             localStorage.text = JSON.stringify(that.files.projects);
-            that.newFolderButton(files,spot,file);
+            that.newFolderButton(files,spot,file,true);
             // that.projFileList.empty();
             // that.display(that.files["projects"],that.projFileList);
             //console.log($(this).parent());
@@ -114,7 +114,7 @@ define([
             // that.display(that.files["projects"],that.projFileList);
             //console.log($(this).parent());
             localStorage.text = JSON.stringify(that.files.projects);
-            that.newFolderButton(that.files.projects,that.projFileList,file);
+            that.newFolderButton(that.files.projects,that.projFileList,file,true);
           }
         })
       ).append(
@@ -201,7 +201,7 @@ define([
         // console.log(that.files.findFiles(that.files.projects));
       });
     },//renders the buttons
-    newFileButton: function(folder,spot,file){
+    newFileButton: function(folder,spot,file,clicking=false){
       spot.append($('<div/>', {
         class:"file-button", text:Object.keys(file)[0]
       }).dblclick(function(e){
@@ -228,8 +228,9 @@ define([
         window.running.interface.projcodeeditor.setValue($(this).data("filedata")[Object.keys($(this).data("filedata"))[0]][0]);
       }));
       $.data(spot[0].lastChild,"filedata",file);
+      if(clicking) spot[0].lastChild.click();
     },
-    newFolderButton: function(folder,spot,file){
+    newFolderButton: function(folder,spot,file,clicking=false){
       spot.append($('<div/>',{
         class:"file-button", text: "▼"
       }).dblclick(function(e){
@@ -264,6 +265,7 @@ define([
       }).append($('<span/>',{ text: file[0]
       })));
       $.data(spot[0].lastChild,"filedata",file);
+      if(clicking) spot[0].lastChild.click();
     },
     display: function(files,spot){
       that = this;
