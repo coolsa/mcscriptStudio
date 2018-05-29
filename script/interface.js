@@ -58,6 +58,14 @@ define([
 			$("#redo").click(function() {
 				that.projcodeeditor.execCommand("redo");
 			});
+			$("#manual").click(function() {
+  			window.location = $(this).find("a").attr("href");
+  			return false;
+			});
+			$("#code").click(function() {
+  			window.location = $(this).find("a").attr("href");
+  			return false;
+			});
 		},
 		slider: function(){
 			var that = this;
