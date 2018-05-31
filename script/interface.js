@@ -26,6 +26,12 @@ define([
 			$(".file-file-selected").data("filedata")[Object.keys($(".file-file-selected").data("filedata"))[0]][0] = projcodeeditor.getValue();
 			localStorage.text = JSON.stringify(window.running.interface.projects.files.projects);
 		});
+		this.projcodeeditor.setOption("extraKeys", {
+		  Tab: function(cm) {
+		    var spaces = Array(cm.getOption("indentUnit") + 1).join(" ");
+		    cm.replaceSelection(spaces);
+		  }
+		});
 		this.outcodeeditor = CodeMirror($(".output-code-replace")[0],{
 			mode: 'javascript',
 			lineNumbers: true,
