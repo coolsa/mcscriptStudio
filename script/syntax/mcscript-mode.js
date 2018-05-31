@@ -13,8 +13,8 @@ define( [ "codemirror", "codemirror/addon/mode/simple" ], function( CodeMirror )
       },
       // Execute
       {
-        regex: /(\s*)(execute|align|anchored|as|at|facing|if|in|positioned|rotated|run|store|unless)([\w\d@\s]+)(align|anchored|as|at|facing|if|in|positioned|rotated|run|store|unless)/,
-        token: [null, "keyword", null, "variable-3"]
+        regex: /(align|anchored|as|at|facing|if|in|positioned|rotated|run|store|unless)/,
+        token: ["keyword"]
       },
       // Variables
       {
