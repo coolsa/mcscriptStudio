@@ -16,6 +16,7 @@ define([
 			mode: 'mcscript',
 			lineNumbers: true,
 			value: "",
+			tabSize: 2,
 			theme: 'pastel-on-dark',
 			scrollbarStyle: 'simple'
 		});
