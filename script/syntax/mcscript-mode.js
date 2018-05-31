@@ -18,7 +18,11 @@ define( [ "codemirror", "codemirror/addon/mode/simple" ], function( CodeMirror )
       },
       // Variables
       {
-        regex: /(\$[\w\-]*)/,
+        regex: /((?:var|const) )([\w\-]*)/,
+        token: ["def","variable"]
+      },
+      {
+        regex: /(\$\([\w\-]*\))/,
         token: ["variable"]
       },
       {
