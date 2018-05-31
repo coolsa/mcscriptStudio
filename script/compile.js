@@ -55,19 +55,22 @@ define(['mcscript','files'],function(mcscript,files){
             data[data.indexOf(datChunk)] = extended[0];
           }
         }
-        var loopArr = [];
-        for(var i = 0; i < extendArr.length; i++){
-          let datChunk = extendArr[i];
+
+        var toUse = [];
+        if(extendArr[0]) toUse = extendArr;
+        else toUse = savedData.split("#file: ");
+        for(var i = 0; i < toUse.length; i++){
+          let datChunk = toUse[i];
           let looped = datChunk.split(/(?:#tagged: )(.*,)/);
           if(looped.length > 1){
             loopArr=looped.slice(1);
             for(var j = 0; j<looped.length;j++){
               if(j%2===1)j++;
               let loopFile = looped[j];
-              extendArr.splice(extendArr.indexOf(datChunk),0,loopFile);
+              toUse.splice(toUse.indexOf(datChunk),0,loopFile);
               i++;
             }
-            extendArr.splice(extendArr.indexOf(datChunk),1);
+            toUse.splice(toUse.indexOf(datChunk),1);
           }
         }
         //console.log(loopArr,extendArr)
@@ -90,45 +93,57 @@ define(['mcscript','files'],function(mcscript,files){
         this.checkFilename(compLoop,file.name,directory,function(fileName,dat){
           loopFileNames.push(fileName);//console.log(compLoop,taggedFile,fileName,dat);
         },true);
-        for(var i = 0; i<loopArr.length;i++){
+        for(var i = 0; i<loopArr.length;i+=2){
           var taggedFile = loopArr[i].split(",")[0].split(":");
           var fileTree = loopFileNames[i].split("/");
 
           var taggedName = fileTree.slice(0,2).join("/")+"/"+taggedFile[0]+"/tags/functions/"+taggedFile[1]+".json"
           var toTag = fileTree[2]+":"+fileTree.slice(fileTree.indexOf("functions")+1).join("/")
           taggedFiles.push({name:taggedName,data:toTag});
-          i++;
+          //console.log(i,{name:taggedName,data:toTag})
         }
       }
-      //add the edited files on last.
+
+      //if there are any duplicate files, merge them.
+      for(var i in compiledFiles){
+        for(var j = i; j<compiledFiles.length;j++){
+          if(compiledFiles[i].name===compiledFiles[j].name&&i!=j){
+            compiledFiles[i].data = compiledFiles[i].data+'\n'+compiledFiles[j].data;
+            // console.log(compiledFiles.splice(j,1));
+            compiledFiles.splice(j,1);
+            j--;
+          }
+        }
+      }
+      //add the edited files
       for(var i = 0; i<editedFiles.length;i++){
-        let editFiles = compiledFiles.find(function (obj) { if (obj.name === editedFiles[i].name) return obj.name});
-        if(editFiles) compiledFiles[compiledFiles.indexOf(editFiles)].data += editedFiles[i].data;
+        let editFiles = compiledFiles.find(function (obj) { if (obj.name === editedFiles[i].name) return obj});
+        if(editFiles) compiledFiles[compiledFiles.indexOf(editFiles)].data = compiledFiles[compiledFiles.indexOf(editFiles)].data+editedFiles[i].data;
         else {
           compiledFiles.push({name: editedFiles[i].name, data: editedFiles[i].data});
         }
       }
-      //if there are any duplicate files, merge them.
-      for(var i in compiledFiles){
-        for(var j = i; j<compiledFiles.length;j++){
-          if(compiledFiles[i].data!=compiledFiles[j].data && compiledFiles[i].name===compiledFiles[j].name){
-            compiledFiles[i].data = compiledFiles[i].data+'\n'+compiledFiles[j].data;
-            compiledFiles.splice(j,1);
-          }
-        }
-      }
       //finally add the tagged files.
-      for(var i in taggedFiles){
+      for(var i =0; i<taggedFiles.length;i++){
+        var toTag = [taggedFiles[i].data]
         for(var j = i; j<taggedFiles.length;j++){
-          if(taggedFiles[i].data!=taggedFiles[j].data && taggedFiles[i].name===taggedFiles[j].name){
-            taggedFiles[i].data= taggedFiles[j].data+'",\n\t\t"'+taggedFiles[i].data;
+          if(i!=j && taggedFiles[i].name===taggedFiles[j].name){
+            toTag.push(taggedFiles[j].data)
             taggedFiles.splice(j,1);
+            j--;
           }
         }
-        taggedFiles[i].data = '{\n\t"values":[\n\t\t"'+taggedFiles[i].data+'"\n\t]\n}'
+        var seen = {}
+        toTag = toTag.filter(function(item){
+          return seen.hasOwnProperty(item) ? false : (seen[item]=true);
+        }).join('",\n\t\t"');
+        taggedFiles[i].data = '{\n\t"values":[\n\t\t"'+toTag+'"\n\t]\n}'
         compiledFiles.push(taggedFiles[i]);
+        i++;
       }
-      // console.log(compiledFiles);
+      // for(let test of compiledFiles){
+      //   console.log(test.name);
+      // }
       return compiledFiles;
       //this compiles the files for the thing, this is very nice! modified from forWeb.js
       //prepped input text for compiling.
