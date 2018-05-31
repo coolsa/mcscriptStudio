@@ -22,8 +22,13 @@ define( [ "codemirror", "codemirror/addon/mode/simple" ], function( CodeMirror )
         token: ["variable"]
       },
       {
-        regex: /(\s*#file:|\s*#extend:)(\s+)([\w\d$\/\._-]*)/,
+        regex: /(\s*#(?:file|extend):)(\s+)([\w\d$\/\._-]*)/,
         token: ["def", null, "variable-3"],
+        sol: true
+      },
+      {
+        regex: /(\s*#(?:tagged): )((?:[^:,\s]+):(?:[^:,\s]+), )([\w\d$\/\._-]+)/,
+        token: ["def", "variable-2", "variable-3"],
         sol: true
       },
       // Selectors
