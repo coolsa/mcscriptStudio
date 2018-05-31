@@ -62,7 +62,7 @@ define(['mcscript','files'],function(mcscript,files){
           if(looped.length > 1){
             loopArr=looped.slice(1);
             for(var j = 0; j<looped.length;j++){
-              if(j===1)j++;
+              if(j%2===1)j++;
               let loopFile = looped[j];
               extendArr.splice(extendArr.indexOf(datChunk),0,loopFile);
               i++;
@@ -70,6 +70,7 @@ define(['mcscript','files'],function(mcscript,files){
             extendArr.splice(extendArr.indexOf(datChunk),1);
           }
         }
+        //console.log(loopArr,extendArr)
         directory = directory.replace(/\/\//g,"/");
         this.checkFilename(data,file.name,directory,function(fileName,dat){
           compiledFiles.push({name: fileName + '.mcfunction', data: dat.join("\n")});
@@ -116,7 +117,6 @@ define(['mcscript','files'],function(mcscript,files){
         taggedFiles[i].data = "{\n\t'values':[\n\t\t'"+taggedFiles[i].data+"'\n\t]\n}"
         compiledFiles.push(taggedFiles[i]);
       }
-      console.log(taggedFiles);
       // console.log(compiledFiles);
       return compiledFiles;
       //this compiles the files for the thing, this is very nice! modified from forWeb.js
