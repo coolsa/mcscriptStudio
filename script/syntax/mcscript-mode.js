@@ -9,7 +9,7 @@ define( [ "codemirror", "codemirror/addon/mode/simple" ], function( CodeMirror )
       // Basic keywords
       {
         regex: /(if|then|else|true|false|as|at|asat|positioned|align|dimension|rotated|anchored|while|do|forEach|for|raycast|stop|continue|switch|case|default|var|bool|boolean|tag|score|const)(\s*\(.*\))/,
-        token: ["def","bracket"]
+        token: ["def","attribute"]
       },
       // Execute
       {
@@ -69,7 +69,7 @@ define( [ "codemirror", "codemirror/addon/mode/simple" ], function( CodeMirror )
       },
       {
         regex: /([a-zA-Z0-9]+)(?=\s*\(.*)/,
-        token: "variable"
+        token: "variable-2"
       },
       // Custom variables
       {

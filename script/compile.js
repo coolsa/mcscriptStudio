@@ -55,6 +55,7 @@ define(['mcscript','files'],function(mcscript,files){
             data[data.indexOf(datChunk)] = extended[0];
           }
         }
+        extendArr.push("\n")
         var loopArr = [];
         var toUse = [];
         if(extendArr[0]) toUse = extendArr;
@@ -143,7 +144,7 @@ define(['mcscript','files'],function(mcscript,files){
       }
       // for(let test of compiledFiles){
       //   console.log(test.name);
-      // }
+      // }\
       return compiledFiles;
       //this compiles the files for the thing, this is very nice! modified from forWeb.js
       //prepped input text for compiling.
