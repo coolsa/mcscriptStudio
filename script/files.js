@@ -77,7 +77,7 @@ define([
         }
         var data = {};
         data[tree[tree.length-1]] = [fileTree[file].data];
-        if(fileTree[file].data != "") currentFolder.push(data); //dont add empty files
+        if(/(\s+)/.test(fileTree[file].data)) currentFolder.push(data); //dont add empty files
       }
       return output;
     }

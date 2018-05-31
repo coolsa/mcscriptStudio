@@ -55,7 +55,7 @@ define(['mcscript','files'],function(mcscript,files){
             data[data.indexOf(datChunk)] = extended[0];
           }
         }
-
+        var loopArr = [];
         var toUse = [];
         if(extendArr[0]) toUse = extendArr;
         else toUse = savedData.split("#file: ");
