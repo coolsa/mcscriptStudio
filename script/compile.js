@@ -100,6 +100,7 @@ define(['mcscript','files'],function(mcscript,files){
           i++;
         }
       }
+      //add the edited files on last.
       for(var i = 0; i<editedFiles.length;i++){
         let editFiles = compiledFiles.find(function (obj) { if (obj.name === editedFiles[i].name) return obj.name});
         if(editFiles) compiledFiles[compiledFiles.indexOf(editFiles)].data += editedFiles[i].data;
@@ -107,14 +108,24 @@ define(['mcscript','files'],function(mcscript,files){
           compiledFiles.push({name: editedFiles[i].name, data: editedFiles[i].data});
         }
       }
+      //if there are any duplicate files, merge them.
+      for(var i in compiledFiles){
+        for(var j = i; j<compiledFiles.length;j++){
+          if(compiledFiles[i].data!=compiledFiles[j].data && compiledFiles[i].name===compiledFiles[j].name){
+            compiledFiles[i].data = compiledFiles[i].data+'\n'+compiledFiles[j].data;
+            compiledFiles.splice(j,1);
+          }
+        }
+      }
+      //finally add the tagged files.
       for(var i in taggedFiles){
         for(var j = i; j<taggedFiles.length;j++){
           if(taggedFiles[i].data!=taggedFiles[j].data && taggedFiles[i].name===taggedFiles[j].name){
-            taggedFiles[i].data= taggedFiles[j].data+"',\n\t\t'"+taggedFiles[i].data
+            taggedFiles[i].data= taggedFiles[j].data+'",\n\t\t"'+taggedFiles[i].data;
             taggedFiles.splice(j,1);
           }
         }
-        taggedFiles[i].data = "{\n\t'values':[\n\t\t'"+taggedFiles[i].data+"'\n\t]\n}"
+        taggedFiles[i].data = '{\n\t"values":[\n\t\t"'+taggedFiles[i].data+'"\n\t]\n}'
         compiledFiles.push(taggedFiles[i]);
       }
       // console.log(compiledFiles);
