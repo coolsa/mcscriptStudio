@@ -17,6 +17,15 @@ define(['mcscript','files'],function(mcscript,files){
       window.running.interface.files.output = window.running.interface.files.treeFolders(this.compiledFiles);
     },
     //porting the mcscript forweb into here.
+    recurseForEach: function(file,regex,depth,specialDigit){
+      file = file.split(new RegExp(regex[depth],'g'));
+      if(depth+1<regex.length)
+        for(var i = 0; i<file.length;i++){
+          file[i]=this.recurseForEach(file[i],regex,depth+1,specialDigit)
+        }
+      file = file.join("mcscript/"+regex[depth].replace(/([\d]+)/,"")+(specialDigit+depth));
+      return file;
+    },
     compileFiles: function(rawFiles){
       //so this keeps the file tree, as that is important to the compilation.
       //the functions are in the folder for the functions. eg the projects is the datapack name
@@ -46,10 +55,19 @@ define(['mcscript','files'],function(mcscript,files){
           forReplace = forReplace.filter(function(item){
             return seen.hasOwnProperty(item) ? false : (seen[item]=true);
           });
-          for(let foreach of forReplace){
-              data = data.replace(new RegExp(foreach,'g'),"mcscript/foreach"+specialDigit++)
-          }
+          console.log(forReplace);
+          var test = []
+          data = this.recurseForEach(data,forReplace,0,specialDigit);
+          specialDigit+=forReplace.length;
+          // for(var i in forReplace){
+          //     test[i] = data.split(forReplace[i])
+          //     if(i<forReplace.length){
+          //
+          //     }
+          //     // data = data.replace(new RegExp(forReplace[i],'g'),"mcscript/"+forReplace[i].replace(/[\d]+)/,"")+specialDigit++)
+          // }
         }
+        console.log(data);
         //let compiledFiles = [];
         // console.log(data.startsWith(file.dir+"/"+file.name.replace(/\.mcscript/,"")),file.dir+"/"+file.name.replace(/\.mcscript/,""),data);
         // data = file.dir+"/"+file.name.replace(/\.mcscript/,"")+"\n"+data;
