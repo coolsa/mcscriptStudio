@@ -23,10 +23,12 @@ define(['mcscript','files'],function(mcscript,files){
       //then the files in the parent dir are placed straight in functions.
       //ex: proj/data/proj/functions/STUFF.
       // console.log(file);
+      var specialDigit = 0;
       var compiledFiles = []
       var editedFiles = []
       var taggedFiles = []
       for(let file of rawFiles){
+        //var foreachReplace = []; //only a select amount of things are generated per file.
         var input = file.content.split("\n");
         for(let item of input){
           if(",;({[".indexOf(item.trim().slice(-1)) === -1){
@@ -37,6 +39,17 @@ define(['mcscript','files'],function(mcscript,files){
         input = input.join("\n"); //from forWeb.js
         var ast = mcscript.parse(mcscript.TokenStream(mcscript.InputStream(input)));
         var data = mcscript.generate(ast,file.name,file.dir.split("/")[0],file.dir.split("functions")[0]+"functions");
+        let savedData = data;
+        var forReplace = data.match(/(?:mcscript\/)((?:foreach|forEach|dowhile|raycast|while)[\d]+)/g);
+        if(forReplace){
+          var seen = {}
+          forReplace = forReplace.filter(function(item){
+            return seen.hasOwnProperty(item) ? false : (seen[item]=true);
+          });
+          for(let foreach of forReplace){
+              data = data.replace(new RegExp(foreach,'g'),"mcscript/foreach"+specialDigit++)
+          }
+        }
         //let compiledFiles = [];
         // console.log(data.startsWith(file.dir+"/"+file.name.replace(/\.mcscript/,"")),file.dir+"/"+file.name.replace(/\.mcscript/,""),data);
         // data = file.dir+"/"+file.name.replace(/\.mcscript/,"")+"\n"+data;
@@ -45,7 +58,6 @@ define(['mcscript','files'],function(mcscript,files){
           directory = directory.split("functions")[0]+"functions"
           data = '#file: ./mcscript/load\n' + data;
         }
-        let savedData = data;
         data = data.split("#file: ");
         let extendArr = [];
         for(let datChunk of data){
@@ -76,7 +88,22 @@ define(['mcscript','files'],function(mcscript,files){
         //console.log(loopArr,extendArr)
         directory = directory.replace(/\/\//g,"/");
         this.checkFilename(data,file.name,directory,function(fileName,dat){
-          compiledFiles.push({name: fileName + '.mcfunction', data: dat.join("\n")});
+          // dat.forEach(function(e,i,array){
+          //   if(e.match(/(?:^execute)(?:.*)(foreach[\d]+$)/)){
+          //     if(foreachReplace.indexOf(e.match(/(?:^execute)(?:.*)(foreach[\d]+$)/)[0].match(/foreach[\d]+$/))===-1)
+          //       foreachReplace = foreachReplace.concat([e.match(/(?:^execute)(?:.*)(foreach[\d]+$)/)[0].match(/foreach[\d]+$/),"foreach"+specialDigit])
+          //     array[i] = e.match(/(?:^execute)(?:.*)(foreach[\d]+$)/)[0].replace(new RegExp(foreachReplace[foreachReplace.indexOf(e.match(/(?:^execute)(?:.*)(foreach[\d]+$)/)[0].match(/foreach[\d]+$/))]+'$'),"foreach"+specialDigit)
+          //   }
+          // });
+          // console.log(foreachReplace);
+          var fullData = dat.join("\n");
+          // if(/(mcscript\/foreach[\d]+$)/.test(fileName)){
+          //   var thisname = fileName.match(/(foreach[\d]+$)/)[0]
+          //   fullData = fullData.replace(new RegExp(thisname),"foreach"+specialDigit)
+          //   fileName = fileName.replace(/(foreach[\d]+$)/,"foreach"+specialDigit);
+          //   specialDigit++;
+          // }
+          compiledFiles.push({name: fileName + '.mcfunction', data: fullData});
         });
         this.checkFilename(extendArr,file.name,directory,function(fileName,dat){
           dat = "\n# Extended from "+file.name+" to "+ fileName + ".mcfunction\n" + dat.join("\n");
@@ -103,7 +130,6 @@ define(['mcscript','files'],function(mcscript,files){
           //console.log(i,{name:taggedName,data:toTag})
         }
       }
-
       //if there are any duplicate files, merge them.
       for(var i in compiledFiles){
         for(var j = i; j<compiledFiles.length;j++){
