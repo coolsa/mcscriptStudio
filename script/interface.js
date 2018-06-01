@@ -38,7 +38,7 @@ define([
 			theme: 'pastel-on-dark',
 			scrollbarStyle: 'simple'
 		});
-		this.outcodeeditor.setSize($(".center").width()-$(".project-render").width()-$(".splitter").width()-250,'100%');
+		this.outcodeeditor.setSize($(".center").width()-$(".project-render").width()-$(".splitter").width()-300,'100%');
 		this.slider();
 		this.buttons();
 		this.files = new files();
@@ -80,12 +80,12 @@ define([
 				resizeHeight:false,
 				onDrag: function(){
 					$(".output-render")[0].style.maxWidth = $(".center").width()-$(".project-render").width() +"px";
-					that.outcodeeditor.setSize($(".center").width()-$(".project-render").width()-$(".splitter").width()-250,'100%');
+					that.outcodeeditor.setSize($(".center").width()-$(".project-render").width()-$(".splitter").width()-300,'100%');
 					that.projcodeeditor.setSize($(".center").width()-$(".output-render").width()-$(".splitter").width()-250,'100%');
 				},
 				onDragEnd: function(){
 					$(".output-render")[0].style.maxWidth = $(".center").width()-$(".project-render").width() +"px";
-					that.outcodeeditor.setSize($(".center").width()-$(".project-render").width()-$(".splitter").width()-250,'100%');
+					that.outcodeeditor.setSize($(".center").width()-$(".project-render").width()-$(".splitter").width()-300,'100%');
 					that.outcodeeditor.refresh();
 					that.projcodeeditor.setSize($(".center").width()-$(".output-render").width()-$(".splitter").width()-250,'100%');
 					that.projcodeeditor.refresh();
@@ -105,7 +105,7 @@ define([
 				$(".center")[0].style.maxHeight = $(window).height() + "px";
 				that.projcodeeditor.setSize($(".center").width()-$(".output-render").width()-$(".splitter").width()-250,'100%');
 				that.projcodeeditor.refresh();
-				that.outcodeeditor.setSize($(".center").width()-$(".project-render").width()-$(".splitter").width()-250,'100%');
+				that.outcodeeditor.setSize($(".center").width()-$(".project-render").width()-$(".splitter").width()-300,'100%');
 				that.outcodeeditor.refresh();
 			});
 		}

@@ -306,8 +306,8 @@ body {
   float:left;
 	padding:0px;
 	height:100%;
-	width:250px;
-  min-width:250px;
+	width:300px;
+  min-width:300px;
 }
 .output-code-replace{
 	position:relative;

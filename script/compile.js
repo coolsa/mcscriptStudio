@@ -58,7 +58,7 @@ define(['mcscript','files'],function(mcscript,files){
         var loopArr = [];
         var toUse = data.concat(extendArr);
         extendArr.push("\n")
-        console.log(data,extendArr,toUse);
+        //console.log(data,extendArr,toUse);
         for(var i = 0; i < toUse.length; i++){
           let datChunk = toUse[i];
           let looped = datChunk.split(/(?:#tagged: )(.*,)/);
