@@ -112,7 +112,7 @@ define([
     downloadFiles: function(){
       var that = this;
       zip = new JSZip();
-      this.zipRecurse(zip,this.files.output);
+      this.zipRecurse(zip,this.files.output[1]);
       // for(var i = 1; i<this.files.output.length;i++){
       //   console.log(this.files.output[i]);
       // }
