@@ -55,11 +55,10 @@ define(['mcscript','files'],function(mcscript,files){
             data[data.indexOf(datChunk)] = extended[0];
           }
         }
-        extendArr.push("\n")
         var loopArr = [];
-        var toUse = [];
-        if(extendArr[0]) toUse = extendArr;
-        else toUse = savedData.split("#file: ");
+        var toUse = data.concat(extendArr);
+        extendArr.push("\n")
+        console.log(data,extendArr,toUse);
         for(var i = 0; i < toUse.length; i++){
           let datChunk = toUse[i];
           let looped = datChunk.split(/(?:#tagged: )(.*,)/);

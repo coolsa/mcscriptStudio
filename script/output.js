@@ -47,15 +47,6 @@ define([
       }).dblclick(function(e){
         e.stopPropagation();
         //console.log($(this).data("filedata"));
-        if($(this).contents().filter(function(){return this.nodeType == 3;})[0].nodeValue=="▼") {
-          $(this).contents().filter(function(){return this.nodeType == 3;})[0].nodeValue="▶";
-          $(this).children('.output-file-button').hide();
-          //console.log($(this).contents().filter(function(){return this.nodeType == 3;})[0].nodeValue)
-        }
-        else if($(this).contents().filter(function(){return this.nodeType == 3;})[0].nodeValue=="▶") {
-          $(this).contents().filter(function(){return this.nodeType == 3;})[0].nodeValue="▼";
-          $(this).children('.output-file-button').show();
-        }
       }).hover(
         function(){
           $(".output-file-hover").removeClass("output-file-hover");
@@ -73,6 +64,15 @@ define([
         $(this).addClass("output-file-selected");
         $(this).parents().addClass("output-file-parent-active");
         $('.output-file-replace').removeClass("output-file-parent-active");
+        if($(this).contents().filter(function(){return this.nodeType == 3;})[0].nodeValue=="▼") {
+          $(this).contents().filter(function(){return this.nodeType == 3;})[0].nodeValue="▶";
+          $(this).children('.output-file-button').hide();
+          //console.log($(this).contents().filter(function(){return this.nodeType == 3;})[0].nodeValue)
+        }
+        else if($(this).contents().filter(function(){return this.nodeType == 3;})[0].nodeValue=="▶") {
+          $(this).contents().filter(function(){return this.nodeType == 3;})[0].nodeValue="▼";
+          $(this).children('.output-file-button').show();
+        }
       }).append($('<span/>',{ text: file[0]
       })));
       $.data(spot[0].lastChild,"filedata",file);
