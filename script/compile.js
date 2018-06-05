@@ -5,6 +5,8 @@ define(['mcscript','files'],function(mcscript,files){
   }
   compile.prototype = {
     compile: function(files){
+      // var testfile = files[0].content.replace(/([^\,\;\(\{\[])(\n)/g,function(match,p1,p2){return p1+";\n"})
+      // console.log(mcscript.gen.parseCode(mcscript.parser.parse(mcscript.lexer.lexer(testfile))),"file.mcscript")
       this.compiledFiles = this.compileFiles(files);//got to return something that i can work with in an actual functional style.
       //now to do things with output. ohhhh boy. copy pasting project.
       var data = {}
@@ -23,7 +25,7 @@ define(['mcscript','files'],function(mcscript,files){
         for(var i = 0; i<file.length;i++){
           file[i]=this.recurseForEach(file[i],regex,depth+1,specialDigit)
         }
-      file = file.join("mcscript/"+regex[depth].replace(/([\d]+)/,"")+(specialDigit+depth));
+      file = file.join(regex[depth].replace(/([\d]+)/,"")+(specialDigit+depth));
       return file;
     },
     compileFiles: function(rawFiles){
@@ -55,7 +57,7 @@ define(['mcscript','files'],function(mcscript,files){
           forReplace = forReplace.filter(function(item){
             return seen.hasOwnProperty(item) ? false : (seen[item]=true);
           });
-          console.log(forReplace);
+          //console.log(forReplace);
           var test = []
           data = this.recurseForEach(data,forReplace,0,specialDigit);
           specialDigit+=forReplace.length;
@@ -67,7 +69,7 @@ define(['mcscript','files'],function(mcscript,files){
           //     // data = data.replace(new RegExp(forReplace[i],'g'),"mcscript/"+forReplace[i].replace(/[\d]+)/,"")+specialDigit++)
           // }
         }
-        console.log(data);
+        //console.log(data);
         //let compiledFiles = [];
         // console.log(data.startsWith(file.dir+"/"+file.name.replace(/\.mcscript/,"")),file.dir+"/"+file.name.replace(/\.mcscript/,""),data);
         // data = file.dir+"/"+file.name.replace(/\.mcscript/,"")+"\n"+data;

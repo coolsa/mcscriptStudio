@@ -29,7 +29,7 @@ require( [
   "script/syntax/mcscript-mode.js",
   "codemirror/keymap/sublime",
   "codemirror/addon/edit/matchbrackets"
-], function (running, domReady ) {
+], function (running, domReady) {
   domReady( function () {
     window.running = new running();
   } );
