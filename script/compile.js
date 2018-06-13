@@ -39,7 +39,7 @@ define(['mcscript','files'],function(mcscript,files){
       // and that is what i did. this works now.
       var thisdir = parentFile.dir;
       var thisfile = file.replace(/(^|\/)\.\//,'$1'); //filters out .//
-      console.log(thisfile);
+      //console.log(thisfile);
       if(thisfile.match(/^\/./)){//prep direct file paths. anything starting with /
         thisdir = thisfile.match(/^.*?(?=\/\.\.|\/[^\/.]*$)/)[0];
         thisfile = thisfile.substring(thisdir.length+1);
@@ -170,7 +170,7 @@ define(['mcscript','files'],function(mcscript,files){
         taggedFiles[i].data = '{\n\t"values":[\n\t\t"'+toTag+'"\n\t]\n}'
       }
       compiledFiles = compiledFiles.concat(taggedFiles);
-      console.log(compiledFiles,editedFiles,taggedFiles);
+      //console.log(compiledFiles,editedFiles,taggedFiles);
       return compiledFiles;
       //this compiles the files for the thing, this is very nice! modified from forWeb.js
       //prepped input text for compiling.
