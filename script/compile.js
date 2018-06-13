@@ -38,7 +38,8 @@ define(['mcscript','files'],function(mcscript,files){
       //so working backwards i guess.
       // and that is what i did. this works now.
       var thisdir = parentFile.dir;
-      var thisfile = file.replace(/(^|\/)\.\//,'$1'); //filters out ./
+      var thisfile = file.replace(/(^|\/)\.\//,'$1'); //filters out .//
+      console.log(thisfile);
       if(thisfile.match(/^\/./)){//prep direct file paths. anything starting with /
         thisdir = thisfile.match(/^.*?(?=\/\.\.|\/[^\/.]*$)/)[0];
         thisfile = thisfile.substring(thisdir.length+1);
@@ -77,7 +78,7 @@ define(['mcscript','files'],function(mcscript,files){
         var input = file.content.replace(/([^\n,;({[])([\n])/g,'$1;\n').replace(/\n([\s]+);/g,'\n');
         var directory = file.dir;
         var ast = mcscript.parse(mcscript.TokenStream(mcscript.InputStream(input,file.dir.split("functions")[1]+'/'+file.name)));
-        var data = mcscript.generate(ast,file.name,file.dir.split("/")[0],file.dir.split("functions")[0]+"functions");
+        var data = mcscript.generate(ast,file.name,file.dir.split("/")[0],'/'+file.dir.split("functions")[0]+"functions");
         let savedData = data;
         var forReplace = data.match(/(?:mcscript\/)((?:foreach|forEach|dowhile|raycast|while)[\d]+)/g);
         if(forReplace){
@@ -96,7 +97,7 @@ define(['mcscript','files'],function(mcscript,files){
         //console.log(file.dir);
         if(file.name.endsWith('load.mcscript')){
           directory = directory.split("functions")[0]+"functions"
-          data = '#file: ./mcscript/load\n' + data;
+          data = '#file: ./mcscript/load\n#tagged: minecraft:load, ./mcscript/load\n' + data;
         }
         else {
           data = '#file: /'+file.dir+'/'+file.name.split('.mcscript')[0]+'\n'+data;
@@ -118,13 +119,13 @@ define(['mcscript','files'],function(mcscript,files){
               //console.log(ext,compiledFiles)
               if(ext==='extend'){
                 //console.log(part[j+1].match(/.*/));
-                editedFiles.push({name:that.fileName(part[j+1].match(/.*/)[0],file)+'.mcfunction',data:'\n#Extended from '+thisfilename+'\n'+part[j+1].replace(/.*\n/,'')});
+                editedFiles.push({name:that.fileName(part[j+1].match(/.*/)[0],file)+'.mcfunction',data:'\n#Extended from '+file.dir+'/'+file.name+'\n'+part[j+1].replace(/.*\n/,'')});
                 //console.log(that.fileName(part[j+1].match(/.*/)[0],file)); //so this works basically in every case. sweet.
               }
               else if(ext==='tagged'){
                 var totag = part[j+1].match(/(^[^\s,]*)(?:, )(.*)/).slice(1);
                 totag[1] = that.fileName(totag[1],file)//so 1 will be the tag file, 2 will be the tagged file. nice.
-                editedFiles.push({name:totag[1]+'.mcfunction',data:'\n#Tagged into '+totag[0]+' and extended from '+thisfilename+'\n'+part[j+1].replace(/.*\n/,'')});//add the edited file.
+                editedFiles.push({name:totag[1]+'.mcfunction',data:'\n#Tagged into '+totag[0]+' and extended from '+file.dir+'/'+file.name+'\n'+part[j+1].replace(/.*\n/,'')});//add the edited file.
                 taggedFiles.push({name:totag[1].match(/((.*?\/){2})/)[0]+''+totag[0].split(':')[0]+'/tags/functions/'+totag[0].split(':')[1]+'.json',data:totag[1].match(/(?:data\/)(.+?)(?:\/functions\/)(.*)/).slice(1)[0]+':'+totag[1].match(/(?:data\/)(.+?)(?:\/functions\/)(.*)/).slice(1)[1]})
                 //handle the tagged part of the file, then just extend it.
                 //console.log(part[j+1].match(/.*/))
